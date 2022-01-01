@@ -1,0 +1,22 @@
+{
+  "name": "youtube-clone2",
+  "version": "1.0.0",
+  "description": "youtube-clone2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GitHubGW/youtube-clone2.git"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "GW <kowonp@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GitHubGW/youtube-clone2/issues"
+  },
+  "homepage": "https://github.com/GitHubGW/youtube-clone2#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
