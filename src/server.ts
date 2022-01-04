@@ -1,32 +1,41 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { NextFunction, Request, Response, Router } from "express";
+import morgan from "morgan";
 
 const PORT = 4000;
 const app = express();
 
-const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  console.log("loggerMiddleware", req.method, req.url);
-  next();
+app.use(morgan("dev"));
+
+const globalRouter: Router = express.Router();
+
+const handleHome = (req: Request, res: Response) => {
+  return res.send("handleHome");
 };
 
-const privateMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  console.log("privateMiddleware", req.url);
+globalRouter.get("/", handleHome);
 
-  if (req.url === "/protected") {
-    return res.send("<h1>protected1</h1>");
-  }
+const userRouter: Router = express.Router();
 
-  next();
+const handleEditUser = (req: Request, res: Response) => {
+  return res.send("handleEditUser");
 };
 
-app.use(loggerMiddleware);
-app.use(privateMiddleware);
+userRouter.get("/edit", handleEditUser);
+
+const videoRouter: Router = express.Router();
+
+const handleSeeVideo = (req: Request, res: Response) => {
+  return res.send("handleSeeVideo");
+};
+
+videoRouter.get("/see", handleSeeVideo);
+
+app.use("/", globalRouter);
+app.use("/user", userRouter);
+app.use("/video", videoRouter);
 
 app.get("/", (req: Request, res: Response) => {
   return res.send("<h1>home</h1>");
-});
-
-app.get("/protected", (req: Request, res: Response) => {
-  return res.send("<h1>proteced2</h1>");
 });
 
 app.listen(PORT, () => {
