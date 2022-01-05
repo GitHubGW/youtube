@@ -5,12 +5,13 @@
 - Home: /
 - Join: /join
 - Login: /login
+- Logout: /logout
 - Search Video: /search
 
 ## User Router
 
-- See Profile: /user/profile
-- Edit Profile: /user/profile/edit
+- See User: /user/:id
+- Edit User: /user/:id/edit
 - Change Email: /user/email/change (보류)
 - Change Password: /user/password/change
 - Upload Avatar: /user/avatar/upload
@@ -19,8 +20,9 @@
 ## Video Router
 
 - Upload Video: /video/upload
-- Edit Video: /video/edit
-- Delete Video: /video/delete
+- See Video: /video/:id
+- Edit Video: /video/:id/edit
+- Delete Video: /video/:id/delete
 - Create Comment: /video/:id/comment/create
 - Edit Comment: /video/:id/comment/edit
 - Delete Comment: /video/:id/comment/delete
