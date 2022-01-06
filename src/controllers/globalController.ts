@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 export const handleHome = (req: Request, res: Response) => {
-  return res.send("handleHome");
+  return res.render("global/home");
 };
 
 export const handleJoin = (req: Request, res: Response) => {
