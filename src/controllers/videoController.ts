@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 
 export const handleSeeVideo = (req: Request, res: Response) => {
+  console.log("req.params", req.params);
+
   return res.send("handleSeeVideo");
 };
 
