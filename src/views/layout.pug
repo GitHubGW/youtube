@@ -1,0 +1,30 @@
+doctype html
+html(lang="ko")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+    title #{pageTitle} - YouTube
+  body 
+    header 
+      h1=pageTitle
+      nav 
+        ul 
+          li
+            a(href="/") 홈
+          if fakeUser.isLoggedIn
+            li
+              a(href="/logout") 로그아웃
+            li
+              a(href="/profile") #{fakeUser.username}의 프로필
+          else 
+            li
+              a(href="/login") 로그인
+
+    main
+      block content
+    
+      div #{console.log("fakeUser",pageTitle,fakeUser)}
+      
+      include partials/footer.pug
