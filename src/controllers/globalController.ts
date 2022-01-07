@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 
+const fakeUser = {
+  username: "gw",
+  isLoggedIn: true,
+};
+
 export const handleHome = (req: Request, res: Response) => {
-  return res.render("global/home");
+  return res.render("globals/home", { pageTitle: "홈", fakeUser });
 };
 
 export const handleJoin = (req: Request, res: Response) => {
@@ -9,7 +14,7 @@ export const handleJoin = (req: Request, res: Response) => {
 };
 
 export const handleLogin = (req: Request, res: Response) => {
-  return res.send("handleLogin");
+  return res.render("globals/login");
 };
 
 export const handleLogout = (req: Request, res: Response) => {
