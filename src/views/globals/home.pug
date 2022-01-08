@@ -1,5 +1,12 @@
 extends ../layout.pug
+include ../mixins/mixinVideo.pug
 
 block content
   div 
-    h1 Home
+    h1 홈
+    div #{console.log("videos",videos)}
+
+    each video in videos
+      +mixinVideo(video)
+    else 
+      li 비디오를 찾을 수 없습니다.
