@@ -13,18 +13,14 @@ html(lang="ko")
         ul 
           li
             a(href="/") 홈
-          if fakeUser.isLoggedIn
-            li
-              a(href="/logout") 로그아웃
-            li
-              a(href="/profile") #{fakeUser.username}의 프로필
-          else 
-            li
-              a(href="/login") 로그인
+          li
+            a(href="/logout") 로그아웃
+          li
+            a(href="/profile") 프로필
+          li
+            a(href="/login") 로그인
 
     main
       block content
-    
-      div #{console.log("fakeUser",pageTitle,fakeUser)}
       
       include partials/footer.pug

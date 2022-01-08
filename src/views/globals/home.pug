@@ -3,9 +3,7 @@ include ../mixins/mixinVideo.pug
 
 block content
   div 
-    h1 홈
-    div #{console.log("videos",videos)}
-
+    h1 home
     each video in videos
       +mixinVideo(video)
     else 
