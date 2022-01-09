@@ -30,7 +30,7 @@ const sampleVideo = [
   },
 ];
 
-interface IVideo {
+interface Video {
   id: number;
   title: string;
   content: string;
@@ -40,23 +40,62 @@ interface IVideo {
   createdAt: string;
 }
 
-export const handleSeeVideo = (req: Request, res: Response) => {
+export const handleSeeVideo = (req: Request, res: Response): void => {
   const {
     params: { id },
   } = req;
-  const foundVideo: IVideo | undefined = sampleVideo.find((video) => video.id === +id);
+  const foundVideo: Video | undefined = sampleVideo.find((video) => video.id === +id);
 
   return res.render("videos/seeVideo", { pageTitle: `${foundVideo?.title}`, video: foundVideo });
 };
 
-export const handleEditVideo = (req: Request, res: Response) => {
-  return res.send("handleEditVideo");
+export const handleGetEditVideo = (req: Request, res: Response): void => {
+  const {
+    params: { id },
+  } = req;
+  const foundVideo: Video | undefined = sampleVideo.find((video) => video.id === +id);
+
+  return res.render("videos/editVideo", { pageTitle: `${foundVideo?.title} 수정`, video: foundVideo });
+};
+
+export const handlePostEditVideo = (req: Request, res: Response): void => {
+  const {
+    params: { id },
+    body: { title },
+  } = req;
+  const foundVideo: Video | undefined = sampleVideo.find((video) => video.id === +id);
+
+  if (foundVideo) {
+    foundVideo.title = title;
+  }
+
+  return res.redirect(`/videos/${id}`);
+};
+
+export const handleGetUploadVideo = (req: Request, res: Response): void => {
+  return res.render("videos/uploadVideo", { pageTitle: "비디오 업로드" });
+};
+
+export const handlePostUploadVideo = (req: Request, res: Response): void => {
+  const {
+    body: { title },
+  } = req;
+
+  const newVideo = {
+    id: sampleVideo.length + 1,
+    title,
+    content: `This is video${sampleVideo.length + 1}`,
+    rating: 10,
+    comments: 5,
+    views: 20,
+    createdAt: "10 mins ago",
+  };
+
+  sampleVideo.push(newVideo);
+
+  return res.redirect("/");
 };
 
 export const handleDeleteVideo = (req: Request, res: Response) => {
   return res.send("handleDeleteVideo");
-};
-
-export const handleUploadVideo = (req: Request, res: Response) => {
-  return res.send("handleUploadVideo");
 };
