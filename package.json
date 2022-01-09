@@ -1,10 +1,10 @@
 {
-  "name": "youtube-clone2",
+  "name": "youtube-portfolio",
   "version": "1.0.0",
-  "description": "youtube-clone2",
+  "description": "youtube-portfolio",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GitHubGW/youtube-clone2.git"
+    "url": "git+https://github.com/GitHubGW/youtube-portfolio.git"
   },
   "dependencies": {
     "express": "^4.17.2",
@@ -28,7 +28,7 @@
   "author": "GW <kowonp@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GitHubGW/youtube-clone2/issues"
+    "url": "https://github.com/GitHubGW/youtube-portfolio/issues"
   },
-  "homepage": "https://github.com/GitHubGW/youtube-clone2#readme"
+  "homepage": "https://github.com/GitHubGW/youtube-portfolio#readme"
 }
