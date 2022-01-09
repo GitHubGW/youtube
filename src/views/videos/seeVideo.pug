@@ -3,6 +3,5 @@ include ../mixins/mixinVideo.pug
 
 block content 
   h1 seeVideo
-  div #{console.log("aa",video)}
   +mixinVideo(video)
   a(href=`${video.id}/edit`) Edit Video

@@ -1,0 +1,9 @@
+extends ../layout.pug
+
+block content 
+  h1 editVideo
+
+  h2 title
+  form(method="POST")
+    input(name="title" type="text" placeholder="비디오 제목" value=video.title required)
+    input(type="submit" value="비디오 수정")
