@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-interface VideoModel {
+export interface VideoModel {
   title: string;
   description: string;
   hashtags: string[];

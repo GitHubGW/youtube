@@ -1,16 +1,6 @@
 import { Request, Response } from "express";
 import Video from "../models/Video";
 
-interface Video {
-  id: number;
-  title: string;
-  content: string;
-  rating: number;
-  comments: number;
-  views: number;
-  createdAt: string;
-}
-
 export const handleSeeVideo = (req: Request, res: Response): void => {
   const {
     params: { id },
@@ -40,10 +30,23 @@ export const handleGetUploadVideo = (req: Request, res: Response): void => {
   return res.render("videos/uploadVideo", { pageTitle: "비디오 업로드" });
 };
 
-export const handlePostUploadVideo = (req: Request, res: Response): void => {
+export const handlePostUploadVideo = async (req: Request, res: Response) => {
   const {
-    body: { title },
+    body: { title, description, hashtags },
   } = req;
+
+  const createdVideo = await Video.create({
+    title,
+    description,
+    hashtags: hashtags.split(",").map((hashtag: string) => `#${hashtag}`),
+    createdAt: Date.now(),
+    meta: {
+      rating: 0,
+      views: 0,
+    },
+  });
+
+  console.log("createdVideo", createdVideo);
 
   return res.redirect("/");
 };

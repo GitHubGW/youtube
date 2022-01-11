@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import Video from "../models/Video";
 
-export const handleHome = (req: Request, res: Response) => {
-  Video.find({}, () => {
-    console.log("hello");
-  });
-
-  // return res.render("globals/home", { pageTitle: "홈" });
-  return res.send("");
+export const handleHome = async (req: Request, res: Response) => {
+  try {
+    const foundVideo = await Video.find({});
+    return res.render("globals/home", { pageTitle: "홈", videos: foundVideo });
+  } catch (error) {
+    throw new Error("handleHome error");
+  }
 };
 
 export const handleJoin = (req: Request, res: Response) => {
