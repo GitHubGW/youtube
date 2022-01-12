@@ -3,8 +3,10 @@ extends ../layout.pug
 block content 
   h1 uploadVideo
 
+  h3 #{errorMessage}
+
   form(method="POST")
-    input(name="title" type="text" placeholder="제목" required)
-    input(name="description" type="text" placeholder="설명")
+    input(name="title" type="text" placeholder="제목" required maxlength="20")
+    input(name="description" type="text" placeholder="설명" maxlength="100")
     input(name="hashtags" type="text" placeholder="해시태그")
     input(type="submit" value="업로드")

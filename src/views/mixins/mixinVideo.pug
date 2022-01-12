@@ -3,6 +3,9 @@ mixin mixinVideo(video)
     h1
       a(href=`/videos/${video.id}`)=video.title
     ul 
+      li id: #{video._id}
+      li description: #{video.description}
+      li hashtags: #{video.hashtags}
       li rating: #{video.rating}
       li comments: #{video.comments}
       li views: #{video.views}
