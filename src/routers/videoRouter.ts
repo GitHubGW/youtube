@@ -3,11 +3,11 @@ import { handleGetEditVideo, handlePostEditVideo, handleSeeVideo, handleDeleteVi
 
 const videoRouter: Router = express.Router();
 
-videoRouter.get("/:id(\\d+)", handleSeeVideo);
-videoRouter.get("/:id(\\d+)/edit", handleGetEditVideo);
-videoRouter.post("/:id(\\d+)/edit", handlePostEditVideo);
 videoRouter.get("/upload", handleGetUploadVideo);
 videoRouter.post("/upload", handlePostUploadVideo);
-videoRouter.get("/:id(\\d+)/delete", handleDeleteVideo);
+videoRouter.get("/:id([0-9a-f]{24})", handleSeeVideo);
+videoRouter.get("/:id([0-9a-f]{24})/edit", handleGetEditVideo);
+videoRouter.post("/:id([0-9a-f]{24})/edit", handlePostEditVideo);
+videoRouter.get("/:id([0-9a-f]{24})/delete", handleDeleteVideo);
 
 export default videoRouter;
