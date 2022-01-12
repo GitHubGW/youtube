@@ -14,13 +14,13 @@ export interface VideoModel {
 const { Schema } = mongoose;
 
 const videoSchema: mongoose.Schema = new Schema({
-  title: String,
-  description: String,
-  hashtags: [{ type: String }],
-  createdAt: { type: Date, default: Date.now },
+  title: { type: String, required: true, trim: true, maxlength: 20 },
+  description: { type: String, required: false, trim: true, maxlength: 100 },
+  hashtags: [{ type: String, required: false, trim: true }],
+  createdAt: { type: Date, required: true, default: Date.now },
   meta: {
-    views: Number,
-    rating: Number,
+    views: { type: Number, required: true, default: 0 },
+    rating: { type: Number, required: true, default: 0 },
   },
 });
 
