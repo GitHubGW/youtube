@@ -3,7 +3,7 @@ import Video from "../models/Video";
 
 export const handleHome = async (req: Request, res: Response) => {
   try {
-    const foundVideo = await Video.find({});
+    const foundVideo = await (await Video.find({})).reverse();
     return res.render("globals/home", { pageTitle: "홈", videos: foundVideo });
   } catch (error) {
     throw new Error("handleHome error");
