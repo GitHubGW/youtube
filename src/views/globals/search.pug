@@ -1,0 +1,15 @@
+extends ../layout.pug
+include ../mixins/mixinVideo.pug
+
+block content 
+  h1 search
+
+  h3 #{errorMessage}
+
+  form(method="GET")
+    input(name="title" type="text" placeholder="검색" required)
+    input(type="submit" value="비디오 검색")
+  
+  div
+    each video in videos 
+      +mixinVideo(video)
