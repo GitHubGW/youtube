@@ -62,7 +62,7 @@ export const handleGetUploadVideo = (req: Request, res: Response): void => {
   return res.render("videos/uploadVideo", { pageTitle: "비디오 업로드" });
 };
 
-export const handlePostUploadVideo = async (req: Request, res: Response) => {
+export const handlePostUploadVideo = async (req: Request, res: Response): Promise<void> => {
   try {
     const {
       body: { title, description, hashtags },
@@ -76,6 +76,21 @@ export const handlePostUploadVideo = async (req: Request, res: Response) => {
   }
 };
 
-export const handleDeleteVideo = (req: Request, res: Response) => {
-  return res.send("handleDeleteVideo");
+export const handleGetDeleteVideo = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const {
+      params: { id },
+    } = req;
+    const existingVideo: boolean = await Video.exists({ _id: id });
+
+    if (existingVideo === false) {
+      throw new Error();
+    }
+
+    await Video.findByIdAndDelete(id);
+    return res.redirect("/");
+  } catch (error) {
+    console.log("handleGetDeleteVideo error");
+    return res.redirect("/");
+  }
 };
