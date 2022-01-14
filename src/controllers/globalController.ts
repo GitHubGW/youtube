@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Video from "../models/Video";
 
-export const handleHome = async (req: Request, res: Response) => {
+export const handleHome = async (req: Request, res: Response): Promise<void> => {
   try {
     const foundVideo = await Video.find({}).sort({ createdAt: "desc" });
     return res.render("globals/home", { pageTitle: "홈", videos: foundVideo });
@@ -10,8 +10,18 @@ export const handleHome = async (req: Request, res: Response) => {
   }
 };
 
-export const handleJoin = (req: Request, res: Response) => {
-  return res.send("handleJoin");
+export const handleGetJoin = (req: Request, res: Response): void => {
+  return res.render("globals/join", { pageTitle: "회원가입" });
+};
+
+export const handlePostJoin = (req: Request, res: Response) => {
+  try {
+    const { body } = req;
+    console.log("aa", body);
+  } catch (error) {
+    console.log("handlePostJoin error");
+  }
+  return res.render("globals/join", { pageTitle: "회원가입" });
 };
 
 export const handleLogin = (req: Request, res: Response) => {
@@ -22,7 +32,7 @@ export const handleLogout = (req: Request, res: Response) => {
   return res.send("handleLogout");
 };
 
-export const handleSearch = async (req: Request, res: Response) => {
+export const handleSearch = async (req: Request, res: Response): Promise<void> => {
   try {
     const {
       query: { title },
