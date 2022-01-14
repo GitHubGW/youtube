@@ -76,7 +76,7 @@ export const handlePostUploadVideo = async (req: Request, res: Response): Promis
   }
 };
 
-export const handleGetDeleteVideo = async (req: Request, res: Response): Promise<void> => {
+export const handleDeleteVideo = async (req: Request, res: Response): Promise<void> => {
   try {
     const {
       params: { id },
