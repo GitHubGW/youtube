@@ -15,7 +15,7 @@ export const handleSeeVideo = async (req: Request, res: Response): Promise<void>
     return res.render("videos/seeVideo", { pageTitle: `${foundVideo?.title}`, video: foundVideo });
   } catch (error) {
     console.log("handleSeeVideo error");
-    return res.render("404", { pageTitle: "페이지를 찾을 수 없습니다." });
+    return res.status(404).render("404", { pageTitle: "페이지를 찾을 수 없습니다." });
   }
 };
 
@@ -33,7 +33,7 @@ export const handleGetEditVideo = async (req: Request, res: Response): Promise<v
     return res.render("videos/editVideo", { pageTitle: "비디오 수정", video: foundVideo });
   } catch (error) {
     console.log("handleGetEditVideo error");
-    return res.render("404", { pageTitle: "페이지를 찾을 수 없습니다." });
+    return res.status(404).render("404", { pageTitle: "페이지를 찾을 수 없습니다." });
   }
 };
 
@@ -54,7 +54,7 @@ export const handlePostEditVideo = async (req: Request, res: Response): Promise<
     return res.redirect(`/videos/${id}`);
   } catch (error) {
     console.log("handlePostEditVideo error");
-    return res.render("404", { pageTitle: "페이지를 찾을 수 없습니다." });
+    return res.status(404).render("404", { pageTitle: "페이지를 찾을 수 없습니다." });
   }
 };
 
@@ -72,7 +72,7 @@ export const handlePostUploadVideo = async (req: Request, res: Response): Promis
     return res.redirect("/");
   } catch (error) {
     console.log("handlePostUploadVideo error");
-    return res.render("videos/uploadVideo", { pageTitle: "비디오 업로드", errorMessage: "비디오 업로드에 실패하였습니다." });
+    return res.status(400).render("videos/uploadVideo", { pageTitle: "비디오 업로드", errorMessage: "비디오 업로드에 실패하였습니다." });
   }
 };
 
@@ -91,6 +91,6 @@ export const handleDeleteVideo = async (req: Request, res: Response): Promise<vo
     return res.redirect("/");
   } catch (error) {
     console.log("handleGetDeleteVideo error");
-    return res.redirect("/");
+    return res.status(400).redirect("/");
   }
 };
