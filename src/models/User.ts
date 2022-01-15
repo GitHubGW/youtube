@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
+import bcrypt from "bcrypt";
 
-export interface UserModel {
+export interface UserModel extends Document {
   username: string;
   email: string;
   password: string;
-  avatarUrl: string;
+  avatarUrl?: string;
   createdAt: number;
 }
 
@@ -16,6 +17,10 @@ const userSchema: mongoose.Schema = new Schema({
   password: { type: String, required: true },
   avatarUrl: { type: String, required: false },
   createdAt: { type: Date, required: true, default: Date.now },
+});
+
+userSchema.pre<UserModel>("save", async function () {
+  this.password = await bcrypt.hash(this.password, 10);
 });
 
 const User: mongoose.Model<UserModel> = mongoose.model("User", userSchema);
