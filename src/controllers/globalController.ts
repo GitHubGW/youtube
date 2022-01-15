@@ -40,8 +40,26 @@ export const handlePostJoin = async (req: Request, res: Response): Promise<void>
   }
 };
 
-export const handleLogin = (req: Request, res: Response) => {
-  return res.render("globals/login");
+export const handleGetLogin = (req: Request, res: Response): void => {
+  return res.render("globals/login", { pageTitle: "로그인" });
+};
+
+export const handlePostLogin = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const {
+      body: { email, password },
+    } = req;
+    const existingEmail: boolean = await User.exists({ email });
+
+    if (existingEmail === false) {
+      return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "존재하지 않는 이메일입니다." });
+    }
+
+    return res.render("globals/login", { pageTitle: "로그인" });
+  } catch (error) {
+    console.log("handlePostLogin error");
+    return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "로그인에 실패하였습니다." });
+  }
 };
 
 export const handleLogout = (req: Request, res: Response) => {
