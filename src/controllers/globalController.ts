@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
+import bcrypt from "bcrypt";
 import Video from "../models/Video";
 import User from "../models/User";
 
 export const handleHome = async (req: Request, res: Response): Promise<void> => {
   try {
     const foundVideo = await Video.find({}).sort({ createdAt: "desc" });
-    return res.render("globals/home", { pageTitle: "홈", videos: foundVideo });
+    return res.render("globals/home", { pageTitle: "홈", videos: foundVideo, sessionId: req.sessionID });
   } catch (error) {
     console.log("handleHome error");
     return res.render("globals/home", { pageTitle: "홈", videos: [] });
@@ -49,10 +50,16 @@ export const handlePostLogin = async (req: Request, res: Response): Promise<void
     const {
       body: { email, password },
     } = req;
-    const existingEmail: boolean = await User.exists({ email });
+    const foundUser = await User.findOne({ email });
 
-    if (existingEmail === false) {
+    if (foundUser === null) {
       return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "존재하지 않는 이메일입니다." });
+    }
+
+    const isMatchedPassword: boolean = await bcrypt.compare(password, foundUser?.password as string);
+
+    if (isMatchedPassword === false) {
+      return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "비밀번호가 일치하지 않습니다." });
     }
 
     return res.render("globals/login", { pageTitle: "로그인" });

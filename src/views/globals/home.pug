@@ -4,6 +4,7 @@ include ../mixins/mixinVideo.pug
 block content
   div 
     h1 home
+    h2 #{sessionId}
     each video in videos
       +mixinVideo(video)
     else 
