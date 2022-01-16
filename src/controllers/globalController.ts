@@ -3,8 +3,18 @@ import bcrypt from "bcrypt";
 import Video from "../models/Video";
 import User from "../models/User";
 
+declare module "express-session" {
+  interface SessionData {
+    user?: object | undefined;
+    isLoggedIn: boolean;
+  }
+}
+
 export const handleHome = async (req: Request, res: Response): Promise<void> => {
   try {
+    console.log("req.session", req.session, req.sessionID);
+    console.log("req.cookies", req.cookies);
+
     const foundVideo = await Video.find({}).sort({ createdAt: "desc" });
     return res.render("globals/home", { pageTitle: "홈", videos: foundVideo, sessionId: req.sessionID });
   } catch (error) {
@@ -56,13 +66,15 @@ export const handlePostLogin = async (req: Request, res: Response): Promise<void
       return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "존재하지 않는 이메일입니다." });
     }
 
-    const isMatchedPassword: boolean = await bcrypt.compare(password, foundUser?.password as string);
+    const isMatchedPassword: boolean = await bcrypt.compare(password, foundUser.password as string);
 
     if (isMatchedPassword === false) {
       return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "비밀번호가 일치하지 않습니다." });
     }
 
-    return res.render("globals/login", { pageTitle: "로그인" });
+    req.session.user = foundUser;
+    req.session.isLoggedIn = true;
+    return res.redirect("/");
   } catch (error) {
     console.log("handlePostLogin error");
     return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "로그인에 실패하였습니다." });
