@@ -1,4 +1,17 @@
-import mongoose, { Document } from "mongoose";
+import mongoose from "mongoose";
+
+export interface VideoInterface {
+  _id: object;
+  title: string;
+  description: string;
+  hashtags: string[];
+  createdAt: number;
+  meta: {
+    views: number;
+    rating: number;
+  };
+  __v?: number;
+}
 
 export interface VideoModel {
   title: string;
@@ -23,13 +36,6 @@ const videoSchema: mongoose.Schema = new Schema({
     rating: { type: Number, required: true, default: 0 },
   },
 });
-
-/* videoSchema.pre<VideoModel>("save", function () {
-  this.hashtags = this.hashtags
-    .join()
-    .split(",")
-    .map((hashtag) => (hashtag.startsWith("#") ? hashtag : `#${hashtag}`));
-}); */
 
 const Video: mongoose.Model<VideoModel> = mongoose.model("Video", videoSchema);
 
