@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import Video from "../models/Video";
+import Video, { VideoInterface } from "../models/Video";
 
 export const handleSeeVideo = async (req: Request, res: Response): Promise<void> => {
   try {
     const {
       params: { id },
     } = req;
-    const foundVideo = await Video.findById(id);
+    const foundVideo: VideoInterface | null = await Video.findById(id);
 
     if (foundVideo === null) {
       throw new Error();
@@ -24,7 +24,7 @@ export const handleGetEditVideo = async (req: Request, res: Response): Promise<v
     const {
       params: { id },
     } = req;
-    const foundVideo = await Video.findById(id);
+    const foundVideo: VideoInterface | null = await Video.findById(id);
 
     if (foundVideo === null) {
       throw new Error();

@@ -1,21 +1,18 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import Video from "../models/Video";
-import User from "../models/User";
+import Video, { VideoInterface } from "../models/Video";
+import User, { UserInterface } from "../models/User";
 
 declare module "express-session" {
   interface SessionData {
-    user?: object | undefined;
+    loggedInUser: UserInterface;
     isLoggedIn: boolean;
   }
 }
 
 export const handleHome = async (req: Request, res: Response): Promise<void> => {
   try {
-    console.log("req.session", req.session, req.sessionID);
-    console.log("req.cookies", req.cookies);
-
-    const foundVideo = await Video.find({}).sort({ createdAt: "desc" });
+    const foundVideo: VideoInterface[] = await Video.find({}).sort({ createdAt: "desc" });
     return res.render("globals/home", { pageTitle: "홈", videos: foundVideo, sessionId: req.sessionID });
   } catch (error) {
     console.log("handleHome error");
@@ -60,7 +57,7 @@ export const handlePostLogin = async (req: Request, res: Response): Promise<void
     const {
       body: { email, password },
     } = req;
-    const foundUser = await User.findOne({ email });
+    const foundUser: UserInterface | null = await User.findOne({ email });
 
     if (foundUser === null) {
       return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "존재하지 않는 이메일입니다." });
@@ -72,7 +69,7 @@ export const handlePostLogin = async (req: Request, res: Response): Promise<void
       return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "비밀번호가 일치하지 않습니다." });
     }
 
-    req.session.user = foundUser;
+    req.session.loggedInUser = foundUser;
     req.session.isLoggedIn = true;
     return res.redirect("/");
   } catch (error) {
@@ -95,7 +92,7 @@ export const handleSearch = async (req: Request, res: Response): Promise<void> =
       return res.render("globals/search", { pageTitle: "비디오 검색", videos: [] });
     }
 
-    const foundVideo = await Video.find({
+    const foundVideo: VideoInterface[] = await Video.find({
       title: {
         $regex: new RegExp(title as string, "i"), // $regex: /title/i
       },
