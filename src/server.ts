@@ -1,3 +1,4 @@
+import "dotenv/config";
 import "./db";
 import express, { Express } from "express";
 import morgan from "morgan";
@@ -15,7 +16,15 @@ app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
-app.use(session({ secret: "hello", resave: false, saveUninitialized: false, store: MongoStore.create({ mongoUrl: "mongodb://localhost:27017/youtube-portfolio" }) }));
+app.use(
+  session({
+    secret: process.env.COOKIE_SECRET as string,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.DATABASE_URL as string }),
+    cookie: { maxAge: 1000000000 },
+  })
+);
 app.use(localsMiddleware);
 app.use("/", globalRouter);
 app.use("/users", userRouter);
