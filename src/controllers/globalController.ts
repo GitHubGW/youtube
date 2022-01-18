@@ -10,6 +10,12 @@ declare module "express-session" {
   }
 }
 
+interface ParamsConfig {
+  client_id: string;
+  allow_signup: boolean;
+  scope: string;
+}
+
 export const handleHome = async (req: Request, res: Response): Promise<void> => {
   try {
     const foundVideo: VideoInterface[] = await Video.find({}).sort({ createdAt: "desc" });
@@ -107,4 +113,16 @@ export const handleSearch = async (req: Request, res: Response): Promise<void> =
     console.log("handleSearch error");
     return res.status(400).render("globals/search", { pageTitle: "비디오 검색", videos: [] });
   }
+};
+
+export const handleGitHubAuthStart = (req: Request, res: Response): void => {
+  const baseUrl: string = "https://github.com/login/oauth/authorize";
+  const paramsConfig: ParamsConfig = { client_id: process.env.GITHUB_CLIENT_ID as string, allow_signup: true, scope: "read:user user:email" };
+  const urlSearchParams: string = new URLSearchParams(paramsConfig as any).toString();
+  const githubAuthUrl: string = `${baseUrl}?${urlSearchParams}`;
+  return res.redirect(githubAuthUrl);
+};
+
+export const handleGitHubAuthEnd = (req: Request, res: Response): void => {
+  res.send("hello");
 };

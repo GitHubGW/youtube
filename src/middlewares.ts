@@ -7,6 +7,5 @@ export const localsMiddleware = (req: Request, res: Response, next: NextFunction
     res.locals.loggedInUser = req.session.loggedInUser;
     res.locals.isLoggedIn = req.session.isLoggedIn;
   }
-
   next();
 };
