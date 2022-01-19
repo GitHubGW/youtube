@@ -149,16 +149,21 @@ export const handleGitHubAuthEnd = async (req: Request, res: Response) => {
 
     if ("access_token" in tokenJsonData) {
       const { access_token } = tokenJsonData;
-
       const githubUserJsonData = await (await fetch("https://api.github.com/user", { method: "GET", headers: { Authorization: `token ${access_token}` } })).json();
-      console.log("githubUserJsonData", githubUserJsonData);
+      const githubEmailJsonData = await (await fetch("https://api.github.com/user/emails", { method: "GET", headers: { Authorization: `token ${access_token}` } })).json();
+      const userEmailObject: Object | undefined = githubEmailJsonData.find((emailObject: any) => emailObject.primary === true && emailObject.verified === true);
+
+      if (userEmailObject === undefined) {
+        return res.redirect("/login");
+      } else {
+      }
 
       res.send("dd");
     } else {
       throw new Error();
     }
   } catch (error) {
-    console.log("handleGitHubAuthEnd error");
+    console.log("handleGitHubAuthEnd error", error);
     return res.redirect("/login");
   }
 };
