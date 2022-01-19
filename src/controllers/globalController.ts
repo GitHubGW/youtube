@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import Video, { VideoInterface } from "../models/Video";
 import User, { UserInterface } from "../models/User";
+import fetch from "cross-fetch";
 
 declare module "express-session" {
   interface SessionData {
@@ -10,10 +11,16 @@ declare module "express-session" {
   }
 }
 
-interface ParamsConfig {
+interface AuthorizeParams {
   client_id: string;
   allow_signup: boolean;
   scope: string;
+}
+
+interface AccessTokenParams {
+  client_id: string;
+  client_secret: string;
+  code: string;
 }
 
 export const handleHome = async (req: Request, res: Response): Promise<void> => {
@@ -117,12 +124,41 @@ export const handleSearch = async (req: Request, res: Response): Promise<void> =
 
 export const handleGitHubAuthStart = (req: Request, res: Response): void => {
   const baseUrl: string = "https://github.com/login/oauth/authorize";
-  const paramsConfig: ParamsConfig = { client_id: process.env.GITHUB_CLIENT_ID as string, allow_signup: true, scope: "read:user user:email" };
-  const urlSearchParams: string = new URLSearchParams(paramsConfig as any).toString();
-  const githubAuthUrl: string = `${baseUrl}?${urlSearchParams}`;
-  return res.redirect(githubAuthUrl);
+  const authorizeParams: AuthorizeParams = {
+    client_id: process.env.GITHUB_CLIENT_ID as string,
+    allow_signup: true,
+    scope: "read:user user:email",
+  };
+  const urlSearchParams: string = new URLSearchParams(authorizeParams as any).toString();
+  const githubAuthorizeUrl: string = `${baseUrl}?${urlSearchParams}`;
+  return res.redirect(githubAuthorizeUrl);
 };
 
-export const handleGitHubAuthEnd = (req: Request, res: Response): void => {
-  res.send("hello");
+export const handleGitHubAuthEnd = async (req: Request, res: Response) => {
+  const baseUrl: string = "https://github.com/login/oauth/access_token";
+  const accessTokenParams: AccessTokenParams = {
+    client_id: process.env.GITHUB_CLIENT_ID as string,
+    client_secret: process.env.GITHUB_CLIENT_SECRET as string,
+    code: req.query.code as string,
+  };
+  const urlSearchParams: string = new URLSearchParams(accessTokenParams as any).toString();
+  const githubAccessTokenUrl: string = `${baseUrl}?${urlSearchParams}`;
+
+  try {
+    const tokenJsonData = await (await fetch(githubAccessTokenUrl, { method: "POST", headers: { Accept: "application/json" } })).json();
+
+    if ("access_token" in tokenJsonData) {
+      const { access_token } = tokenJsonData;
+
+      const githubUserJsonData = await (await fetch("https://api.github.com/user", { method: "GET", headers: { Authorization: `token ${access_token}` } })).json();
+      console.log("githubUserJsonData", githubUserJsonData);
+
+      res.send("dd");
+    } else {
+      throw new Error();
+    }
+  } catch (error) {
+    console.log("handleGitHubAuthEnd error");
+    return res.redirect("/login");
+  }
 };
