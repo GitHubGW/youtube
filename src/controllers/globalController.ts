@@ -23,6 +23,13 @@ interface AccessTokenParams {
   code: string;
 }
 
+interface UserEmailObject {
+  email: string;
+  primary: boolean;
+  verified: boolean;
+  visibility: string;
+}
+
 export const handleHome = async (req: Request, res: Response): Promise<void> => {
   try {
     const foundVideo: VideoInterface[] = await Video.find({}).sort({ createdAt: "desc" });
@@ -56,7 +63,7 @@ export const handlePostJoin = async (req: Request, res: Response): Promise<void>
     await User.create({ username, email, password });
     return res.redirect("/login");
   } catch (error) {
-    console.log("handlePostJoin error");
+    console.log("handlePostJoin error", error);
     return res.status(400).render("globals/join", { pageTitle: "회원가입", errorMessage: "회원가입에 실패하였습니다." });
   }
 };
@@ -151,19 +158,32 @@ export const handleGitHubAuthEnd = async (req: Request, res: Response) => {
       const { access_token } = tokenJsonData;
       const githubUserJsonData = await (await fetch("https://api.github.com/user", { method: "GET", headers: { Authorization: `token ${access_token}` } })).json();
       const githubEmailJsonData = await (await fetch("https://api.github.com/user/emails", { method: "GET", headers: { Authorization: `token ${access_token}` } })).json();
-      const userEmailObject: Object | undefined = githubEmailJsonData.find((emailObject: any) => emailObject.primary === true && emailObject.verified === true);
+      const userEmailObject: UserEmailObject | undefined = githubEmailJsonData.find((emailObject: any) => emailObject.primary === true && emailObject.verified === true);
+
+      // console.log("githubUserJsonData", githubUserJsonData);
+      // console.log("githubEmailJsonData", githubEmailJsonData);
 
       if (userEmailObject === undefined) {
         return res.redirect("/login");
-      } else {
       }
 
-      res.send("dd");
+      const foundUser: UserInterface | null = await User.findOne({ email: userEmailObject.email });
+
+      if (foundUser) {
+        req.session.loggedInUser = foundUser;
+        req.session.isLoggedIn = true;
+        return res.redirect("/");
+      } else {
+        const createdUser: UserInterface = await User.create({ githubId: githubUserJsonData.id, username: githubUserJsonData.name, email: userEmailObject.email });
+        req.session.loggedInUser = createdUser;
+        req.session.isLoggedIn = true;
+        return res.redirect("/");
+      }
     } else {
       throw new Error();
     }
   } catch (error) {
-    console.log("handleGitHubAuthEnd error", error);
+    console.log("handleGitHubAuthEnd error");
     return res.redirect("/login");
   }
 };
