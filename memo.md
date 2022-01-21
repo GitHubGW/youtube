@@ -26,3 +26,7 @@
 - Create Comment: /video/:id/comment/create
 - Edit Comment: /video/:id/comment/edit
 - Delete Comment: /video/:id/comment/delete
+
+## 기타 추가 사항
+
+- 카카오 로그인 또는 구글 로그인 (소셜 로그인 추가)

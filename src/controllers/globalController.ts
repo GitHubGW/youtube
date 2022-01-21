@@ -77,7 +77,7 @@ export const handlePostLogin = async (req: Request, res: Response): Promise<void
     const {
       body: { email, password },
     } = req;
-    const foundUser: UserInterface | null = await User.findOne({ email });
+    const foundUser: UserInterface | null = await User.findOne({ email, githubId: null });
 
     if (foundUser === null) {
       return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "존재하지 않는 이메일입니다." });
@@ -99,7 +99,9 @@ export const handlePostLogin = async (req: Request, res: Response): Promise<void
 };
 
 export const handleLogout = (req: Request, res: Response) => {
-  return res.send("handleLogout");
+  req.session.destroy(() => {
+    return res.redirect("/");
+  });
 };
 
 export const handleSearch = async (req: Request, res: Response): Promise<void> => {
@@ -160,9 +162,6 @@ export const handleGitHubAuthEnd = async (req: Request, res: Response) => {
       const githubEmailJsonData = await (await fetch("https://api.github.com/user/emails", { method: "GET", headers: { Authorization: `token ${access_token}` } })).json();
       const userEmailObject: UserEmailObject | undefined = githubEmailJsonData.find((emailObject: any) => emailObject.primary === true && emailObject.verified === true);
 
-      // console.log("githubUserJsonData", githubUserJsonData);
-      // console.log("githubEmailJsonData", githubEmailJsonData);
-
       if (userEmailObject === undefined) {
         return res.redirect("/login");
       }
@@ -174,7 +173,12 @@ export const handleGitHubAuthEnd = async (req: Request, res: Response) => {
         req.session.isLoggedIn = true;
         return res.redirect("/");
       } else {
-        const createdUser: UserInterface = await User.create({ githubId: githubUserJsonData.id, username: githubUserJsonData.name, email: userEmailObject.email });
+        const createdUser: UserInterface = await User.create({
+          githubId: githubUserJsonData.id,
+          username: githubUserJsonData.name,
+          email: userEmailObject.email,
+          avatarUrl: githubUserJsonData.avatar_url,
+        });
         req.session.loggedInUser = createdUser;
         req.session.isLoggedIn = true;
         return res.redirect("/");

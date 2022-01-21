@@ -6,8 +6,8 @@ export interface UserInterface {
   githubId: number | null;
   username: string;
   email: string;
-  password?: string;
   avatarUrl?: string;
+  password?: string;
   createdAt: number;
   __v?: number;
 }
@@ -16,19 +16,19 @@ export interface UserModel extends Document {
   githubId: number | null;
   username: string;
   email: string;
-  password?: string;
   avatarUrl?: string;
+  password?: string;
   createdAt: number;
 }
 
 const { Schema } = mongoose;
 
 const userSchema: mongoose.Schema = new Schema({
-  githubId: { type: Number, required: false, default: null },
+  githubId: { type: Number, required: true, default: null },
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: false },
   avatarUrl: { type: String, required: false },
+  password: { type: String, required: false },
   createdAt: { type: Date, required: true, default: Date.now },
 });
 
