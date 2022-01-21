@@ -63,7 +63,7 @@ export const handlePostJoin = async (req: Request, res: Response): Promise<void>
     await User.create({ username, email, password });
     return res.redirect("/login");
   } catch (error) {
-    console.log("handlePostJoin error", error);
+    console.log("handlePostJoin error");
     return res.status(400).render("globals/join", { pageTitle: "회원가입", errorMessage: "회원가입에 실패하였습니다." });
   }
 };
@@ -77,7 +77,7 @@ export const handlePostLogin = async (req: Request, res: Response): Promise<void
     const {
       body: { email, password },
     } = req;
-    const foundUser: UserInterface | null = await User.findOne({ email, githubId: null });
+    const foundUser: UserInterface | null = await User.findOne({ email, githubId: null, kakaoId: null });
 
     if (foundUser === null) {
       return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "존재하지 않는 이메일입니다." });

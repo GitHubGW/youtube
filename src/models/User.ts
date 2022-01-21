@@ -3,8 +3,8 @@ import bcrypt from "bcrypt";
 
 export interface UserInterface {
   _id: object;
-  githubId: number | null;
-  kakaoId: number | null;
+  githubId?: number | null;
+  kakaoId?: number | null;
   username: string;
   email: string;
   avatarUrl?: string;
@@ -14,8 +14,8 @@ export interface UserInterface {
 }
 
 export interface UserModel extends Document {
-  githubId: number | null;
-  kakaoId: number | null;
+  githubId?: number | null;
+  kakaoId?: number | null;
   username: string;
   email: string;
   avatarUrl?: string;
