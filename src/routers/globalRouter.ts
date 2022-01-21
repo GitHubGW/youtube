@@ -9,6 +9,8 @@ import {
   handleSearch,
   handleGitHubAuthStart,
   handleGitHubAuthEnd,
+  handleKakaoAuthStart,
+  handleKakaoAuthEnd,
 } from "../controllers/globalController";
 
 const globalRouter: Router = express.Router();
@@ -22,5 +24,7 @@ globalRouter.get("/logout", handleLogout);
 globalRouter.get("/search", handleSearch);
 globalRouter.get("/github/auth/start", handleGitHubAuthStart);
 globalRouter.get("/github/auth/end", handleGitHubAuthEnd);
+globalRouter.get("/kakao/auth/start", handleKakaoAuthStart);
+globalRouter.get("/kakao/auth/end", handleKakaoAuthEnd);
 
 export default globalRouter;

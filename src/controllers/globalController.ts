@@ -11,13 +11,13 @@ declare module "express-session" {
   }
 }
 
-interface AuthorizeParams {
+interface GitHubAuthorizeParams {
   client_id: string;
   allow_signup: boolean;
   scope: string;
 }
 
-interface AccessTokenParams {
+interface GitHubAccessTokenParams {
   client_id: string;
   client_secret: string;
   code: string;
@@ -98,7 +98,7 @@ export const handlePostLogin = async (req: Request, res: Response): Promise<void
   }
 };
 
-export const handleLogout = (req: Request, res: Response) => {
+export const handleLogout = (req: Request, res: Response): void => {
   req.session.destroy(() => {
     return res.redirect("/");
   });
@@ -133,24 +133,24 @@ export const handleSearch = async (req: Request, res: Response): Promise<void> =
 
 export const handleGitHubAuthStart = (req: Request, res: Response): void => {
   const baseUrl: string = "https://github.com/login/oauth/authorize";
-  const authorizeParams: AuthorizeParams = {
+  const githubAuthorizeParams: GitHubAuthorizeParams = {
     client_id: process.env.GITHUB_CLIENT_ID as string,
     allow_signup: true,
     scope: "read:user user:email",
   };
-  const urlSearchParams: string = new URLSearchParams(authorizeParams as any).toString();
+  const urlSearchParams: string = new URLSearchParams(githubAuthorizeParams as any).toString();
   const githubAuthorizeUrl: string = `${baseUrl}?${urlSearchParams}`;
   return res.redirect(githubAuthorizeUrl);
 };
 
-export const handleGitHubAuthEnd = async (req: Request, res: Response) => {
+export const handleGitHubAuthEnd = async (req: Request, res: Response): Promise<void> => {
   const baseUrl: string = "https://github.com/login/oauth/access_token";
-  const accessTokenParams: AccessTokenParams = {
+  const githubAccessTokenParams: GitHubAccessTokenParams = {
     client_id: process.env.GITHUB_CLIENT_ID as string,
     client_secret: process.env.GITHUB_CLIENT_SECRET as string,
     code: req.query.code as string,
   };
-  const urlSearchParams: string = new URLSearchParams(accessTokenParams as any).toString();
+  const urlSearchParams: string = new URLSearchParams(githubAccessTokenParams as any).toString();
   const githubAccessTokenUrl: string = `${baseUrl}?${urlSearchParams}`;
 
   try {
@@ -188,6 +188,56 @@ export const handleGitHubAuthEnd = async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.log("handleGitHubAuthEnd error");
+    return res.redirect("/login");
+  }
+};
+
+export const handleKakaoAuthStart = (req: Request, res: Response): void => {
+  const KAKAO_REST_API_KEY: string | undefined = process.env.KAKAO_REST_API_KEY;
+  const REDIRECT_URI: string = "http://localhost:4000/kakao/auth/end";
+  const kakaoAuthorizeUrl: string = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
+  return res.redirect(kakaoAuthorizeUrl);
+};
+
+export const handleKakaoAuthEnd = async (req: Request, res: Response): Promise<void> => {
+  const KAKAO_REST_API_KEY: string | undefined = process.env.KAKAO_REST_API_KEY;
+  const REDIRECT_URI: string = "http://localhost:4000/kakao/auth/end";
+  const AUTHORIZE_CODE = req.query.code as string;
+  const kakaoAccessTokenUrl: string = `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${AUTHORIZE_CODE}`;
+
+  try {
+    const tokenJsonData = await (await fetch(kakaoAccessTokenUrl, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded;charset=utf-8" } })).json();
+
+    if ("access_token" in tokenJsonData) {
+      const { access_token } = tokenJsonData;
+      const kakaoUserJsonData = await (
+        await fetch("https://kapi.kakao.com/v2/user/me", {
+          method: "GET",
+          headers: { Authorization: `Bearer ${access_token}`, "Content-Type": "application/x-www-form-urlencoded;charset=utf-8" },
+        })
+      ).json();
+      const foundUser: UserInterface | null = await User.findOne({ email: kakaoUserJsonData.kakao_account.email });
+
+      if (foundUser) {
+        req.session.loggedInUser = foundUser;
+        req.session.isLoggedIn = true;
+        return res.redirect("/");
+      } else {
+        const createdUser: UserInterface = await User.create({
+          kakaoId: kakaoUserJsonData.id,
+          username: kakaoUserJsonData.kakao_account.profile.nickname,
+          email: kakaoUserJsonData.kakao_account.email,
+          avatarUrl: kakaoUserJsonData.kakao_account.profile.profile_image_url,
+        });
+        req.session.loggedInUser = createdUser;
+        req.session.isLoggedIn = true;
+        return res.redirect("/");
+      }
+    } else {
+      throw new Error();
+    }
+  } catch (error) {
+    console.log("handleKakaoAuthEnd error", error);
     return res.redirect("/login");
   }
 };

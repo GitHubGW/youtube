@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 export interface UserInterface {
   _id: object;
   githubId: number | null;
+  kakaoId: number | null;
   username: string;
   email: string;
   avatarUrl?: string;
@@ -14,6 +15,7 @@ export interface UserInterface {
 
 export interface UserModel extends Document {
   githubId: number | null;
+  kakaoId: number | null;
   username: string;
   email: string;
   avatarUrl?: string;
@@ -24,7 +26,8 @@ export interface UserModel extends Document {
 const { Schema } = mongoose;
 
 const userSchema: mongoose.Schema = new Schema({
-  githubId: { type: Number, required: true, default: null },
+  githubId: { type: Number, required: false, default: null },
+  kakaoId: { type: Number, required: false, default: null },
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   avatarUrl: { type: String, required: false },
@@ -33,7 +36,7 @@ const userSchema: mongoose.Schema = new Schema({
 });
 
 userSchema.pre<UserModel>("save", async function () {
-  if (this.githubId === null) {
+  if (this.githubId === null && this.kakaoId === null) {
     this.password = await bcrypt.hash(this.password as string, 10);
   }
 });
