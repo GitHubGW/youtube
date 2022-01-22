@@ -53,7 +53,7 @@ export const handlePostJoin = async (req: Request, res: Response): Promise<void>
     const existingUsernameOrEmail: boolean = await User.exists({ $or: [{ username }, { email }] });
 
     if (existingUsernameOrEmail) {
-      return res.status(400).render("globals/join", { pageTitle: "회원가입", errorMessage: "이미 존재하는 유저명 또는 이메일입니다." });
+      return res.status(400).render("globals/join", { pageTitle: "회원가입", errorMessage: "이미 존재하는 이름 또는 이메일입니다." });
     }
 
     if (password !== confirmPassword) {

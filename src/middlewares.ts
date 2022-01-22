@@ -12,8 +12,6 @@ export const localsMiddleware = (req: Request, res: Response, next: NextFunction
 };
 
 export const publicMiddleware = (req: Request, res: Response, next: NextFunction): void => {
-  console.log("publicMiddleware", req.session.isLoggedIn);
-
   if (req.session.isLoggedIn === undefined) {
     return next();
   } else {
@@ -22,8 +20,6 @@ export const publicMiddleware = (req: Request, res: Response, next: NextFunction
 };
 
 export const privateMiddleware = (req: Request, res: Response, next: NextFunction): void => {
-  console.log("privateMiddleware", req.session.isLoggedIn);
-
   if (req.session.isLoggedIn === true) {
     return next();
   } else {

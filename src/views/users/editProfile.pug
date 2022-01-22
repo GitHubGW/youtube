@@ -1,0 +1,11 @@
+extends ../layout.pug
+
+block content 
+  h1 editProfile
+
+  h3=errorMessage
+
+  form(method="POST")
+    input(name="username" type="text" placeholder="이름" value=loggedInUser.username)
+    input(name="email" type="email" placeholder="이메일" value=loggedInUser.email)
+    input(type="submit" value="프로필 업데이트")
