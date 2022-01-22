@@ -1,11 +1,22 @@
 import express, { Router } from "express";
-import { handleDeleteUser, handleGetEditProfile, handlePostEditProfile, handleSeeUser } from "../controllers/userController";
-import { publicMiddleware, privateMiddleware } from "../middlewares";
+import {
+  handleDeleteUser,
+  handleProfile,
+  handleGetEditProfile,
+  handlePostEditProfile,
+  handleGetChangeProfile,
+  handlePostChangeProfile,
+  handleSeeUser,
+} from "../controllers/userController";
+import { privateMiddleware } from "../middlewares";
 
 const userRouter: Router = express.Router();
 
-userRouter.get("/edit", privateMiddleware, handleGetEditProfile);
-userRouter.post("/edit", privateMiddleware, handlePostEditProfile);
+userRouter.get("/profile", handleProfile);
+userRouter.get("/profile/edit", privateMiddleware, handleGetEditProfile);
+userRouter.post("/profile/edit", privateMiddleware, handlePostEditProfile);
+userRouter.get("/password/change", privateMiddleware, handleGetChangeProfile);
+userRouter.post("/password/change", privateMiddleware, handlePostChangeProfile);
 userRouter.get("/delete", privateMiddleware, handleDeleteUser);
 userRouter.get("/:id", handleSeeUser);
 
