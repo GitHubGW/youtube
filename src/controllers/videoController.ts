@@ -66,9 +66,10 @@ export const handlePostUploadVideo = async (req: Request, res: Response): Promis
   try {
     const {
       body: { title, description, hashtags },
+      file,
     } = req;
     const formattedHashtags: string[] = hashtags.split(",").map((hashtag: string) => (hashtag.startsWith("#") ? hashtag : `#${hashtag}`));
-    await Video.create({ title, description, hashtags: formattedHashtags });
+    await Video.create({ title, description, hashtags: formattedHashtags, videoUrl: file?.path });
     return res.redirect("/");
   } catch (error) {
     console.log("handlePostUploadVideo error");

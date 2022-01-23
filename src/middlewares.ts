@@ -28,4 +28,6 @@ export const privateMiddleware = (req: Request, res: Response, next: NextFunctio
   }
 };
 
-export const multerMiddleware: multer.Multer = multer({ dest: "uploads/" });
+export const avatarMulterMiddleware: multer.Multer = multer({ dest: "uploads/avatars/", limits: { fileSize: 20000000 } });
+
+export const videoMulterMiddleware: multer.Multer = multer({ dest: "uploads/videos/", limits: { fileSize: 50000000 } });

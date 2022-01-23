@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 export interface VideoInterface {
   _id: object;
+  videoUrl: string;
   title: string;
   description: string;
   hashtags: string[];
@@ -14,6 +15,7 @@ export interface VideoInterface {
 }
 
 export interface VideoModel {
+  videoUrl: string;
   title: string;
   description: string;
   hashtags: string[];
@@ -27,6 +29,7 @@ export interface VideoModel {
 const { Schema } = mongoose;
 
 const videoSchema: mongoose.Schema = new Schema({
+  videoUrl: { type: String, required: true },
   title: { type: String, required: true, trim: true, maxlength: 20 },
   description: { type: String, required: false, trim: true, maxlength: 100 },
   hashtags: [{ type: String, required: false, trim: true }],

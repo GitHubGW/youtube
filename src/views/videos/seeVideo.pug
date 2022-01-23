@@ -3,8 +3,11 @@ include ../mixins/mixinVideo.pug
 
 block content 
   h1 seeVideo
+
+  video(src=`/${video.videoUrl}` controls width="650" height="450") 
+
   +mixinVideo(video)
+
   a(href=`${video.id}/edit`) Edit Video
-  br
   br
   a(href=`${video.id}/delete`) Delete Video

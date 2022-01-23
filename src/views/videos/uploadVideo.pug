@@ -5,7 +5,9 @@ block content
 
   h3 #{errorMessage}
 
-  form(method="POST")
+  form(method="POST" enctype="multipart/form-data")
+    label(for="video") 비디오
+    input(id="video" name="video" type="file" placeholder="비디오" accept="video/*" required)
     input(name="title" type="text" placeholder="제목" required maxlength="20")
     input(name="description" type="text" placeholder="설명" maxlength="100")
     input(name="hashtags" type="text" placeholder="해시태그")
