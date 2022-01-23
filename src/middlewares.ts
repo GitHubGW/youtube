@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import multer from "multer";
 
 export const localsMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   console.log("localsMiddleware", req.session.loggedInUser, req.session.isLoggedIn);
@@ -26,3 +27,5 @@ export const privateMiddleware = (req: Request, res: Response, next: NextFunctio
     return res.redirect("/login");
   }
 };
+
+export const multerMiddleware: multer.Multer = multer({ dest: "uploads/" });

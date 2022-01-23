@@ -15,15 +15,16 @@ export const handlePostEditProfile = async (req: Request, res: Response): Promis
     const {
       body: { username, email },
       session: { loggedInUser },
+      file,
     } = req;
-    const updatedUser: UserInterface | null = await User.findByIdAndUpdate(loggedInUser?._id, { $set: { username, email } }, { new: true });
+    const updatedUser: UserInterface | null = await User.findByIdAndUpdate(loggedInUser?._id, { $set: { username, email, avatarUrl: file?.path } }, { new: true });
 
     if (updatedUser === null) {
       throw new Error();
     }
 
     req.session.loggedInUser = updatedUser;
-    return res.redirect("/users/edit");
+    return res.redirect("/users/profile/edit");
   } catch (error) {
     console.log("handlePostEditProfile error");
     return res.status(400).render("users/editProfile", { pageTitle: "프로필 수정", errorMessage: "이미 존재하는 이름 또는 이메일입니다." });
