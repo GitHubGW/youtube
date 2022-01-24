@@ -6,13 +6,13 @@ export const handleSeeVideo = async (req: Request, res: Response): Promise<void>
     const {
       params: { id },
     } = req;
-    const foundVideo: VideoInterface | null = await Video.findById(id);
+    const foundVideo: VideoInterface | null = await Video.findById(id).populate("user");
 
     if (foundVideo === null) {
       throw new Error();
     }
 
-    return res.render("videos/seeVideo", { pageTitle: `${foundVideo?.title}`, video: foundVideo });
+    return res.render("videos/seeVideo", { pageTitle: `${foundVideo?.title}`, video: foundVideo, user: foundVideo.user });
   } catch (error) {
     console.log("handleSeeVideo error");
     return res.status(404).render("404", { pageTitle: "페이지를 찾을 수 없습니다." });
@@ -66,10 +66,11 @@ export const handlePostUploadVideo = async (req: Request, res: Response): Promis
   try {
     const {
       body: { title, description, hashtags },
+      session: { loggedInUser },
       file,
     } = req;
     const formattedHashtags: string[] = hashtags.split(",").map((hashtag: string) => (hashtag.startsWith("#") ? hashtag : `#${hashtag}`));
-    await Video.create({ title, description, hashtags: formattedHashtags, videoUrl: file?.path });
+    await Video.create({ user: loggedInUser?._id, title, description, hashtags: formattedHashtags, videoUrl: file?.path });
     return res.redirect("/");
   } catch (error) {
     console.log("handlePostUploadVideo error");

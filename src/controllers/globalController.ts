@@ -32,7 +32,7 @@ interface UserEmailObject {
 
 export const handleHome = async (req: Request, res: Response): Promise<void> => {
   try {
-    const foundVideo: VideoInterface[] = await Video.find({}).sort({ createdAt: "desc" });
+    const foundVideo: VideoInterface[] = await Video.find({}).sort({ createdAt: "desc" }).populate("user");
     return res.render("globals/home", { pageTitle: "홈", videos: foundVideo, sessionId: req.sessionID });
   } catch (error) {
     console.log("handleHome error");
