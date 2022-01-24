@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import User from "../models/User";
 import Video, { VideoInterface } from "../models/Video";
 
 export const handleSeeVideo = async (req: Request, res: Response): Promise<void> => {
@@ -70,7 +71,10 @@ export const handlePostUploadVideo = async (req: Request, res: Response): Promis
       file,
     } = req;
     const formattedHashtags: string[] = hashtags.split(",").map((hashtag: string) => (hashtag.startsWith("#") ? hashtag : `#${hashtag}`));
-    await Video.create({ user: loggedInUser?._id, title, description, hashtags: formattedHashtags, videoUrl: file?.path });
+    const createdVideo = await Video.create({ user: loggedInUser?._id, title, description, hashtags: formattedHashtags, videoUrl: file?.path });
+    const foundUser = await User.findById(loggedInUser?._id);
+    foundUser?.videos.push(createdVideo._id);
+    foundUser?.save();
     return res.redirect("/");
   } catch (error) {
     console.log("handlePostUploadVideo error");

@@ -9,6 +9,7 @@ export interface UserInterface extends Document {
   email: string;
   avatarUrl?: string;
   password?: string;
+  videos: Types.ObjectId[];
   createdAt: number;
   __v?: number;
 }
@@ -20,6 +21,7 @@ const userSchema: mongoose.Schema<UserInterface> = new Schema({
   email: { type: String, required: true, unique: true },
   avatarUrl: { type: String, required: false },
   password: { type: String, required: false },
+  videos: [{ type: Schema.Types.ObjectId, require: false, ref: "Video" }],
   createdAt: { type: Number, required: true, default: Date.now },
 });
 
