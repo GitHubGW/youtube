@@ -1,0 +1,13 @@
+extends ../layout.pug
+
+block content 
+  h1 profile
+
+  h2=user.username
+  h2=user.email
+
+  if loggedInUser.username === user.username
+    a(href=`/users/${loggedInUser.username}/profile/edit`) 프로필 수정
+    br
+    if loggedInUser.githubId===null && loggedInUser.kakaoId===null
+      a(href=`/users/${loggedInUser.username}/password/change`) 비밀번호 변경
