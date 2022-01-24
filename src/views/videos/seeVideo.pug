@@ -4,10 +4,12 @@ include ../mixins/mixinVideo.pug
 block content 
   h1 seeVideo
 
-  video(src=`/${video.videoUrl}` controls width="650" height="450") 
-
   +mixinVideo(video)
 
-  a(href=`${video.id}/edit`) Edit Video
-  br
-  a(href=`${video.id}/delete`) Delete Video
+  h3 user._id: #{user._id}
+  h3 loggedInUser._id: #{loggedInUser._id}
+
+  if String(user._id) === String(loggedInUser._id)
+    a(href=`${video._id}/edit`) Edit Video
+    br
+    a(href=`${video._id}/delete`) Delete Video

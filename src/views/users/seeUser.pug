@@ -1,4 +1,5 @@
 extends ../layout.pug
+include ../mixins/mixinVideo.pug
 
 block content 
   h1 profile
@@ -11,3 +12,8 @@ block content
     br
     if loggedInUser.githubId===null && loggedInUser.kakaoId===null
       a(href=`/users/${loggedInUser.username}/password/change`) 비밀번호 변경
+
+  each video in videos
+    +mixinVideo(video)
+  else 
+    h1 업로드한 비디오가 존재하지 않습니다.

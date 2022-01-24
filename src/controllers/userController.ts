@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import User, { UserInterface } from "../models/User";
+import Video from "../models/Video";
 
 export const handleSeeUser = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -9,7 +10,9 @@ export const handleSeeUser = async (req: Request, res: Response): Promise<void> 
     if (foundUser === null) {
       throw new Error();
     }
-    return res.render("users/seeUser", { pageTitle: `${req.params.username} 프로필`, user: foundUser });
+
+    const foundVideos = await Video.find({ user: foundUser._id });
+    return res.render("users/seeUser", { pageTitle: `${req.params.username} 프로필`, user: foundUser, videos: foundVideos });
   } catch (error) {
     console.log("handleSeeUser error");
     return res.status(404).render("404", { pageTitle: "페이지를 찾을 수 없습니다." });
