@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
+import fetch from "cross-fetch";
 import Video, { VideoInterface } from "../models/Video";
 import User, { UserInterface } from "../models/User";
-import fetch from "cross-fetch";
 
 declare module "express-session" {
   interface SessionData {
@@ -32,8 +32,8 @@ interface UserEmailObject {
 
 export const handleHome = async (req: Request, res: Response): Promise<void> => {
   try {
-    const foundVideo: VideoInterface[] = await Video.find({}).sort({ createdAt: "desc" }).populate("user");
-    return res.render("globals/home", { pageTitle: "홈", videos: foundVideo, sessionId: req.sessionID });
+    const foundVideos: VideoInterface[] = await Video.find({}).sort({ createdAt: "desc" }).populate("user");
+    return res.render("globals/home", { pageTitle: "홈", videos: foundVideos });
   } catch (error) {
     console.log("handleHome error");
     return res.render("globals/home", { pageTitle: "홈", videos: [] });
@@ -50,18 +50,19 @@ export const handlePostJoin = async (req: Request, res: Response): Promise<void>
       body: { username, email, password, confirmPassword },
     } = req;
 
-    const existingUsernameOrEmail: boolean = await User.exists({ $or: [{ username }, { email }] });
+    const existingUser: boolean = await User.exists({ $or: [{ username }, { email }] });
 
-    if (existingUsernameOrEmail) {
+    if (existingUser) {
       return res.status(400).render("globals/join", { pageTitle: "회원가입", errorMessage: "이미 존재하는 이름 또는 이메일입니다." });
     }
-
     if (password !== confirmPassword) {
       return res.status(400).render("globals/join", { pageTitle: "회원가입", errorMessage: "비밀번호가 일치하지 않습니다." });
     }
 
-    await User.create({ username, email, password });
-    return res.redirect("/login");
+    const createdUser: UserInterface = await User.create({ username, email, password });
+    req.session.loggedInUser = createdUser;
+    req.session.isLoggedIn = true;
+    return res.redirect("/");
   } catch (error) {
     console.log("handlePostJoin error");
     return res.status(400).render("globals/join", { pageTitle: "회원가입", errorMessage: "회원가입에 실패하였습니다." });
@@ -114,17 +115,17 @@ export const handleSearch = async (req: Request, res: Response): Promise<void> =
       return res.render("globals/search", { pageTitle: "비디오 검색", videos: [] });
     }
 
-    const foundVideo: VideoInterface[] = await Video.find({
+    const foundVideos: VideoInterface[] = await Video.find({
       title: {
         $regex: new RegExp(title as string, "i"), // $regex: /title/i
       },
     });
 
-    if (foundVideo.length === 0) {
+    if (foundVideos.length === 0) {
       return res.render("globals/search", { pageTitle: "비디오 검색", videos: [], errorMessage: "비디오를 찾을 수 없습니다." });
     }
 
-    return res.render("globals/search", { pageTitle: "비디오 검색", videos: foundVideo });
+    return res.render("globals/search", { pageTitle: "비디오 검색", videos: foundVideos });
   } catch (error) {
     console.log("handleSearch error");
     return res.status(400).render("globals/search", { pageTitle: "비디오 검색", videos: [] });

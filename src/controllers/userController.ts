@@ -42,7 +42,7 @@ export const handlePostEditProfile = async (req: Request, res: Response): Promis
   }
 };
 
-export const handleGetChangeProfile = (req: Request, res: Response): void => {
+export const handleGetChangePassword = (req: Request, res: Response): void => {
   const {
     session: { loggedInUser },
   } = req;
@@ -50,10 +50,11 @@ export const handleGetChangeProfile = (req: Request, res: Response): void => {
   if (loggedInUser?.githubId === null && loggedInUser.kakaoId === null) {
     return res.render("users/changePassword", { pageTitle: `${req.params.username} 비밀번호 변경` });
   }
-  return res.redirect("/users/profile");
+
+  return res.redirect(`/users/${loggedInUser?.username}`);
 };
 
-export const handlePostChangeProfile = async (req: Request, res: Response): Promise<void> => {
+export const handlePostChangePassword = async (req: Request, res: Response): Promise<void> => {
   try {
     const {
       body: { oldPassword, newPassword, newPasswordConfirm },
@@ -76,15 +77,11 @@ export const handlePostChangeProfile = async (req: Request, res: Response): Prom
         .render("users/changePassword", { pageTitle: `${req.params.username} 비밀번호 변경`, errorMessage: "새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다." });
     }
 
-    const updatedUser = await User.findByIdAndUpdate(loggedInUser?._id, { $set: { password: newPassword } }, { new: true });
+    const updatedUser: UserInterface | null = await User.findByIdAndUpdate(loggedInUser?._id, { $set: { password: newPassword } }, { new: true });
     await updatedUser?.save();
-    return res.redirect("/users/profile");
+    return res.redirect(`/users/${loggedInUser?.username}`);
   } catch (error) {
     console.log("handlePostChangeProfile error");
     return res.status(400).render("users/changePassword", { pageTitle: `${req.params.username} 비밀번호 변경`, errorMessage: "비밀번호 변경에 실패하였습니다." });
   }
-};
-
-export const handleDeleteUser = (req: Request, res: Response) => {
-  return res.send("handleDeleteUser");
 };

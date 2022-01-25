@@ -3,9 +3,10 @@ mixin mixinVideo(video)
     video(src=`/${video.videoUrl}` controls width="650" height="450") 
     h1
       a(href=`/videos/${video.id}`)=video.title
-    ul 
-      li 
-        a(href=`/users/${video.user.username}`) Uploader: #{video.user.username}
+    ul
+      if video.user
+        li 
+          a(href=`/users/${video.user.username}`) Uploader: #{video.user.username}
       li id: #{video._id}
       li description: #{video.description}
       li hashtags: #{video.hashtags}

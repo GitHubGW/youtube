@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import multer from "multer";
 
 export const localsMiddleware = (req: Request, res: Response, next: NextFunction): void => {
-  console.log("localsMiddleware", req.session.loggedInUser, req.session.isLoggedIn);
+  // console.log("localsMiddleware", req.session.loggedInUser, req.session.isLoggedIn);
   res.locals.loggedInUser = {};
 
   if (req.session.isLoggedIn === true) {

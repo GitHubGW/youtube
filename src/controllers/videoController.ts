@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import User from "../models/User";
+import { Types } from "mongoose";
+import User, { UserInterface } from "../models/User";
 import Video, { VideoInterface } from "../models/Video";
 
 export const handleSeeVideo = async (req: Request, res: Response): Promise<void> => {
@@ -24,11 +25,15 @@ export const handleGetEditVideo = async (req: Request, res: Response): Promise<v
   try {
     const {
       params: { id },
+      session: { loggedInUser },
     } = req;
     const foundVideo: VideoInterface | null = await Video.findById(id);
 
     if (foundVideo === null) {
       throw new Error();
+    }
+    if (String(foundVideo.user._id) !== String(loggedInUser?._id)) {
+      return res.status(403).redirect("/");
     }
 
     return res.render("videos/editVideo", { pageTitle: "비디오 수정", video: foundVideo });
@@ -43,11 +48,15 @@ export const handlePostEditVideo = async (req: Request, res: Response): Promise<
     const {
       params: { id },
       body: { title, description, hashtags },
+      session: { loggedInUser },
     } = req;
-    const existingVideo: boolean = await Video.exists({ _id: id });
+    const foundVideo: VideoInterface | null = await Video.findById(id);
 
-    if (existingVideo === false) {
+    if (foundVideo === null) {
       throw new Error();
+    }
+    if (String(foundVideo.user._id) !== String(loggedInUser?._id)) {
+      return res.status(403).redirect("/");
     }
 
     const formattedHashtags: string[] = hashtags.split(",").map((hashtag: string) => (hashtag.startsWith("#") ? hashtag : `#${hashtag}`));
@@ -71,10 +80,14 @@ export const handlePostUploadVideo = async (req: Request, res: Response): Promis
       file,
     } = req;
     const formattedHashtags: string[] = hashtags.split(",").map((hashtag: string) => (hashtag.startsWith("#") ? hashtag : `#${hashtag}`));
-    const createdVideo = await Video.create({ user: loggedInUser?._id, title, description, hashtags: formattedHashtags, videoUrl: file?.path });
-    const foundUser = await User.findById(loggedInUser?._id);
-    foundUser?.videos.push(createdVideo._id);
-    foundUser?.save();
+    const createdVideo: VideoInterface = await Video.create({ user: loggedInUser?._id, title, description, hashtags: formattedHashtags, videoUrl: file?.path });
+    const foundUser: UserInterface | null = await User.findById(loggedInUser?._id);
+
+    if (foundUser === null) {
+      throw new Error();
+    }
+
+    await User.findByIdAndUpdate(loggedInUser?._id, { $set: { videos: [...foundUser.videos, createdVideo] } });
     return res.redirect("/");
   } catch (error) {
     console.log("handlePostUploadVideo error");
@@ -86,17 +99,24 @@ export const handleDeleteVideo = async (req: Request, res: Response): Promise<vo
   try {
     const {
       params: { id },
+      session: { loggedInUser },
     } = req;
-    const existingVideo: boolean = await Video.exists({ _id: id });
+    const foundVideo: VideoInterface | null = await Video.findById(id);
+    const foundUser: UserInterface | null = await User.findById(loggedInUser?._id);
 
-    if (existingVideo === false) {
+    if (foundVideo === null || foundUser === null) {
       throw new Error();
+    }
+    if (String(foundVideo?.user._id) !== String(loggedInUser?._id)) {
+      return res.status(403).redirect("/");
     }
 
     await Video.findByIdAndDelete(id);
+    const filteredVideos: Types.ObjectId[] = foundUser.videos.filter((video) => String(video._id) !== String(foundVideo._id));
+    await User.findByIdAndUpdate(loggedInUser?._id, { $set: { videos: filteredVideos } });
     return res.redirect("/");
   } catch (error) {
     console.log("handleGetDeleteVideo error");
-    return res.status(400).redirect("/");
+    return res.status(404).render("404", { pageTitle: "페이지를 찾을 수 없습니다." });
   }
 };
