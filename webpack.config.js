@@ -5,6 +5,9 @@ module.exports = {
   mode: "development",
   devtool: "inline-source-map",
   watch: true,
+  watchOptions: {
+    ignored: /node_modules/,
+  },
   entry: "./src/client/ts/main.ts",
   plugins: [new MiniCssExtractPlugin({ filename: "css/style.css" })],
   module: {
