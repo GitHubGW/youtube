@@ -1,6 +1,77 @@
-@import "./_variables";
+// config
+@import "./configs/_reset";
+@import "./configs/_variables";
 
-body{
-  background-color: $crimson;
-  color:black;
+// minxins
+@import "./mixins/mixinVideo";
+@import "./mixins/mixinVideoPlayer";
+@import "./mixins/mixinVideoDetail";
+@import "./mixins/mixinSearchVideo";
+@import "./mixins/mixinThumbnail";
+
+// components
+@import "./components/header";
+@import "./components/footer";
+@import "./components/socialLogin";
+@import "./components/404";
+@import "./components/errorMessage";
+
+// globals
+@import "./globals/home";
+@import "./globals/form";
+@import "./globals/search";
+
+// users
+@import "./users/seeUser";
+
+// videos
+@import "./videos/uploadVideo";
+@import "./videos/editVideo";
+@import "./videos/seeVideo";
+
+
+html,
+body {
+  height: 100%;
+}
+body {
+  background-color: #F9F9F9;
+  color: $black;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+}
+main {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 75vh;
+}
+button,
+input,
+textarea{
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 3px;
+  font-size: 14px;
+  color: $black;
+  font-weight: 600;
+  background-color: #fff;
+  max-width: $width;
+  border: none;
+  resize: none;
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px $light-black, 0 1px 2px $border-color;
+  &::placeholder{
+    font-weight: 300;
+    color: rgba(0,0,0,0.7);
+  }
+}
+button,
+input[type="submit"] {
+  cursor: pointer;
+}
+a{
+  text-decoration: none;
+  color:inherit;
 }
