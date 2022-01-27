@@ -1,19 +1,46 @@
 extends ../layout.pug
 include ../mixins/mixinVideo.pug
+include ../mixins/mixinThumbnail.pug
 
-block content 
-  h1 profile
+block content
+  .user-profile 
+    .user-profile-container
+      .user-profile__header
+        .profile__avatar
+          if user.avatarUrl===undefined
+            img.u-avatar(src="/images/profile_user.png")
+          else 
+            img.u-avatar(src=user.avatarUrl)
+        .profile__userinfo
+          .profile__username
+            h4 
+              |Name
+              h5 - #{user.username}
+          .profile__email
+            h4 
+              |Email
+              h5 - #{user.email}
+          .profile__githubid
+            h4
+              |GitHub
+              h5 - #{user.githubId}
+          .profile__kakaoid
+            h4
+              |Kakao
+              h5 - #{user.kakaoId}
 
-  h2=user.username
-  h2=user.email
+      if loggedInUser
+        if loggedInUser.username === user.username
+          .user-profile__btns
+            a(href=`/users/${loggedInUser.username}/profile/edit` class="edit_profile")
+              button 프로필 수정
+            if loggedInUser.githubId===null && loggedInUser.kakaoId===null
+              a(href=`/users/${loggedInUser.username}/password/change` class="edit_password")
+                button 비밀번호 변경
 
-  if loggedInUser.username === user.username
-    a(href=`/users/${loggedInUser.username}/profile/edit`) 프로필 수정
-    br
-    if loggedInUser.githubId===null && loggedInUser.kakaoId===null
-      a(href=`/users/${loggedInUser.username}/password/change`) 비밀번호 변경
-
-  each video in videos
-    +mixinVideo(video)
-  else 
-    h1 업로드한 비디오가 존재하지 않습니다.
+      if user.videos.length > 0
+        .uploaded-videos
+          h2 #{user.username}'의 비디오
+          .uploaded-videos-container
+            each video in user.videos
+              +mixinThumbnail(video)

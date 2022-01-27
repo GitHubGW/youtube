@@ -1,14 +1,17 @@
 extends ../layout.pug
 
 block content 
-  h1 editProfile
-
-  h3=errorMessage
-  
-  img(src=`/${loggedInUser.avatarUrl}`, alt=loggedInUser.avatarUrl width=100, height=100)
-  form(method="POST" enctype="multipart/form-data")
-    label(for="avatar") 이미지
-    input(id="avatar" name="avatar" type="file" placeholder="이미지" accept="image/*")
-    input(name="username" type="text" placeholder="이름" value=loggedInUser.username)
-    input(name="email" type="email" placeholder="이메일" value=loggedInUser.email)
-    input(type="submit" value="프로필 업데이트")
+  .form-container 
+    include ../components/youtube.pug
+    form(method="POST" enctype="multipart/form-data")
+      .fileUpload.form__input
+        input(id="avatar" name="avatar" type="file" placeholder="이미지" accept="image/*")
+        i.fas.fa-file-image
+      .form__input
+        input(name="username" type="text" placeholder="이름" value=loggedInUser.username)
+        i.fa.fa-user
+      .form__input
+        input(name="email" type="email" placeholder="이메일" value=loggedInUser.email)
+        i.fa.fa-envelope
+      input(type="submit" value="프로필 업데이트")
+    include ../components/errorMessage.pug
