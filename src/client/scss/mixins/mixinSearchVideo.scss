@@ -1,0 +1,58 @@
+.videoSearch {
+  display: flex;
+  margin-bottom: 12px;
+  .videoSearch__video {
+    a {
+      video {
+        width: 300px;
+      }
+    }
+  }
+  .videoSearch__content {
+    a,
+    a:visited {
+      color: black;
+    }
+    width: 100%;
+    padding-left: 18px;
+    padding-top: 4px;
+    .videoSearch__title {
+      font-size: 17px;
+    }
+    .videoSearch__viewDate {
+      display: flex;
+      color: $medium-gray;
+      font-size: 13px;
+      margin-top: 9px;
+      margin-left: 2px;
+      em {
+        margin: 0 5px;
+        color: $medium-gray;
+      }
+    }
+    .videoSearch__creator {
+      margin-top: 17px;
+      a {
+        display: flex;
+        align-items: center;
+        img {
+          width: 25px;
+          margin-right: 6px;
+          border-radius: 50%;
+        }
+        h5 {
+          color: $medium-gray;
+          font-size: 13px;
+        }
+      }
+    }
+    .videoSearch_description {
+      margin-top: 12px;
+      h5 {
+        font-size: 12px;
+        color: $black;
+        line-height: 1.6;
+      }
+    }
+  }
+}
