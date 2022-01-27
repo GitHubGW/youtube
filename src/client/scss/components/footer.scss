@@ -1,0 +1,24 @@
+.footer {
+  border-top: 1px solid $border-color;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 25px 0;
+  .footer__icon {
+    color: $light-black;
+    font-size: 37px;
+    margin-bottom: 3px;
+    transition: 0.3s;
+    cursor: pointer;
+    &:hover{
+      color: $dark-red;
+    }
+  }
+  .footer__text {
+    font-size: 14px;
+    color: $light-black;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}

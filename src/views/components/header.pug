@@ -1,0 +1,36 @@
+header.header
+  .header__wrapper
+    div.header__column
+      a(href="/" class="youtube__title")
+        span.header__align 
+          span 
+          span 
+          span 
+        include ./youtube.pug
+
+    div.header__column
+      form(action="/search", method="GET" class="search__form")
+        input(name="title" type="text" placeholder="검색" required)
+        i.fas.fa-search
+
+    div.header__column
+      ul
+        if isLoggedIn===undefined
+          li.join__btn
+            a(href="/join") 회원가입
+          li.login__btn
+            i.fas.fa-user-circle
+            a(href="/login") 로그인
+        else 
+          li.upload__btn
+            a(href="/videos/upload")
+              i.fas.fa-upload
+              |업로드
+          li.profile__btn
+            a(href=`/users/${loggedInUser.username}`)
+              i.fas.fa-user
+              |프로필
+          li.logout__btn
+            a(href="/logout")
+              i.fas.fa-sign-out-alt
+              |로그아웃
