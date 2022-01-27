@@ -122,13 +122,13 @@ export const handleSearch = async (req: Request, res: Response): Promise<void> =
     });
 
     if (foundVideos.length === 0) {
-      return res.render("globals/search", { pageTitle: "비디오 검색", videos: [], errorMessage: "비디오를 찾을 수 없습니다." });
+      return res.render("globals/search", { pageTitle: "비디오 검색", videos: [], title, errorMessage: "비디오를 찾을 수 없습니다." });
     }
 
-    return res.render("globals/search", { pageTitle: "비디오 검색", videos: foundVideos });
+    return res.render("globals/search", { pageTitle: "비디오 검색", videos: foundVideos, title });
   } catch (error) {
     console.log("handleSearch error");
-    return res.status(400).render("globals/search", { pageTitle: "비디오 검색", videos: [] });
+    return res.status(400).render("globals/search", { pageTitle: "비디오 검색", videos: [], title: "" });
   }
 };
 
@@ -189,7 +189,7 @@ export const handleGitHubAuthEnd = async (req: Request, res: Response): Promise<
     }
   } catch (error) {
     console.log("handleGitHubAuthEnd error");
-    return res.redirect("/login");
+    return res.render("globals/login", { errorMessage: "깃허브 로그인에 실패하였습니다." });
   }
 };
 
@@ -239,6 +239,6 @@ export const handleKakaoAuthEnd = async (req: Request, res: Response): Promise<v
     }
   } catch (error) {
     console.log("handleKakaoAuthEnd error", error);
-    return res.redirect("/login");
+    return res.render("globals/login", { errorMessage: "카카오 로그인에 실패하였습니다." });
   }
 };

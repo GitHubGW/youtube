@@ -9,12 +9,13 @@ export const handleSeeVideo = async (req: Request, res: Response): Promise<void>
       params: { id },
     } = req;
     const foundVideo: VideoInterface | null = await Video.findById(id).populate("user");
+    const foundAllVideos: VideoInterface[] = await Video.find({});
 
     if (foundVideo === null) {
       throw new Error();
     }
 
-    return res.render("videos/seeVideo", { pageTitle: `${foundVideo?.title}`, video: foundVideo, user: foundVideo.user });
+    return res.render("videos/seeVideo", { pageTitle: `${foundVideo?.title}`, videos: foundAllVideos, video: foundVideo, user: foundVideo.user });
   } catch (error) {
     console.log("handleSeeVideo error");
     return res.status(404).render("404", { pageTitle: "페이지를 찾을 수 없습니다." });

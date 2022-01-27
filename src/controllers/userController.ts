@@ -4,7 +4,12 @@ import User, { UserInterface } from "../models/User";
 
 export const handleSeeUser = async (req: Request, res: Response): Promise<void> => {
   try {
-    const foundUser: UserInterface | null = await User.findOne({ username: req.params.username }).populate("videos");
+    const foundUser: UserInterface | null = await User.findOne({ username: req.params.username }).populate({
+      path: "videos",
+      populate: {
+        path: "user",
+      },
+    });
 
     if (foundUser === null) {
       throw new Error();
@@ -35,7 +40,7 @@ export const handlePostEditProfile = async (req: Request, res: Response): Promis
     }
 
     req.session.loggedInUser = updatedUser;
-    return res.redirect("/users/profile/edit");
+    return res.redirect(`/users/${updatedUser?.username}`);
   } catch (error) {
     console.log("handlePostEditProfile error");
     return res.status(400).render("users/editProfile", { pageTitle: `${req.params.username} 프로필 수정`, errorMessage: "이미 존재하는 이름 또는 이메일입니다." });
