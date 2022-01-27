@@ -1,4 +1,8 @@
 extends ./layout.pug
 
 block content
-  h1 Not Found
+  .notfound-container 
+    include components/youtube.pug
+    h1 죄송합니다. 페이지를 사용할 수 없습니다.
+    h2 클릭하신 링크가 잘못되었거나 페이지가 삭제되었습니다.
+    a(href="/") 홈으로 돌아가기

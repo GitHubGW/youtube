@@ -1,19 +1,15 @@
 extends ../layout.pug
 
 block content
-  h1 login
-
-  h3 #{errorMessage}
-
-  form(method="POST")
-    input(name="email" type="email" placeholder="이메일" required)
-    input(name="password" type="password" placeholder="비밀번호" required)
-    input(type="submit" value="로그인")
-    br
-    a(href="/github/auth/start") 깃허브 로그인
-    br
-    a(href="/kakao/auth/start") 카카오 로그인
-
-  div 
-    span 이미 계정이 있으신가요? 
-    a(href="/join") 회원가입
+  .form-container 
+    include ../components/youtube.pug
+    form(method="POST")
+      .form__input
+        input(name="email" type="email" placeholder="이메일" required)
+        i.fa.fa-envelope
+      .form__input
+        input(name="password" type="password" placeholder="비밀번호" required)
+        i.fas.fa-unlock
+      input(type="submit" value="로그인")
+    include ../components/socialLogin
+    include ../components/errorMessage.pug

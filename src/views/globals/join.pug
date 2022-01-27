@@ -1,17 +1,22 @@
 extends ../layout.pug
 
 block content 
-  h1 join
+  .form-container
+    include ../components/youtube.pug
 
-  h3 #{errorMessage}
-
-  form(method="POST")
-    input(name="username" type="text" placeholder="이름" required)
-    input(name="email" type="email" placeholder="이메일" required)
-    input(name="password" type="password" placeholder="비밀번호" required)
-    input(name="confirmPassword" type="password" placeholder="비밀번호 확인" required)
-    input(type="submit" value="회원가입")
-
-  div 
-    span 이미 계정이 있으신가요? 
-    a(href="/login") 로그인
+    form(method="POST")
+      .form__input
+        input(name="username" type="text" placeholder="이름" required)
+        i.fa.fa-user
+      .form__input
+        input(name="email" type="email" placeholder="이메일" required)
+        i.fa.fa-envelope
+      .form__input
+        input(name="password" type="password" placeholder="비밀번호" required)
+        i.fas.fa-unlock
+      .form__input
+        input(name="confirmPassword" type="password" placeholder="비밀번호 확인" required)
+        i.fas.fa-lock
+      input(type="submit" value="회원가입")
+    include ../components/socialLogin
+    include ../components/errorMessage.pug

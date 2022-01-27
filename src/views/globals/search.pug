@@ -1,15 +1,89 @@
 extends ../layout.pug
 include ../mixins/mixinVideo.pug
+include ../mixins/mixinSearchVideo.pug
 
 block content 
-  h1 search
+  .search__container
+    .home-menu 
+      ul.home-menu-main 
+        li.home-menu-item
+          i.fas.fa-home
+          span 홈
+        li.home-menu-item
+          i.fas.fa-compass
+          span 탐색
+        li.home-menu-item
+          i.fab.fa-youtube-square
+          span 구독
+      .division-line
 
-  h3 #{errorMessage}
+      ul.home-menu-personal 
+        li.home-menu-item
+          i.fas.fa-archive
+          span 보관함
+        li.home-menu-item
+          i.fas.fa-history
+          span 시청 기록
+        li.home-menu-item
+          i.fas.fa-clock
+          span 나중에 볼 동영상
+        li.home-menu-item
+          i.fas.fa-thumbs-up
+          span 좋아요 표시한 동영상
+      .division-line
 
-  form(method="GET")
-    input(name="title" type="text" placeholder="검색" required)
-    input(type="submit" value="비디오 검색")
-  
-  div
-    each video in videos 
-      +mixinVideo(video)
+      h3 구독
+      ul.home-menu-subscription 
+        li.home-menu-item.home-menu-item-subscription
+          img(src="/images/profile_user.png")
+          span GW
+        li.home-menu-item
+          i.fas.fa-plus-circle
+          span 더보기
+      .division-line
+
+      h3 YOUTUBE 더보기
+      ul.home-menu-seemore 
+        li.home-menu-item
+          i.fab.fa-youtube
+          span YouTube Premium
+        li.home-menu-item
+          i.fas.fa-film
+          span 영화
+        li.home-menu-item
+          i.fas.fa-gamepad
+          span 게임
+        li.home-menu-item
+          i.fas.fa-rss
+          span 실시간
+        li.home-menu-item
+          i.fas.fa-lightbulb
+          span 학습
+        li.home-menu-item
+          i.fas.fa-trophy
+          span 스포츠
+      .division-line
+
+      ul.home-menu-setting 
+        li.home-menu-item
+          i.fas.fa-cog
+          span 설정
+        li.home-menu-item
+          i.fas.fa-flag
+          span 신고 기록
+        li.home-menu-item
+          i.fas.fa-question-circle
+          span 고객센터
+        li.home-menu-item
+          i.fas.fa-exclamation-circle
+          span 의견 보내기
+
+    .search_main 
+      .search_main__result
+        i.fas.fa-search
+        | #{title} 검색 결과
+      .search_main__content
+        if videos.length===0
+          h5 비디오를 찾을 수 없습니다.
+        each video in videos 
+          +mixinSearchVideo(video)
