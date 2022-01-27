@@ -1,0 +1,93 @@
+.upload-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 90px;
+  .record-container{
+    width: 100%;
+    max-width: $width;
+    margin-bottom: 18px;
+    video{
+      background-color: #222222;
+      width: 100%;
+      height: 220px;
+      margin-bottom: 10px;
+    }
+    .form__input{
+      .recordBtn{
+        padding:12px 0;
+        background-color: $black;
+        color: white;
+      }
+    }
+  }
+  form{
+    width: 100%;
+    max-width: $width;
+    textarea{
+      height:100px;
+      line-height: 20px;
+    }
+    .form__input{
+      position: relative;
+      width: 100%;
+      height:40px;
+      margin-bottom:12px;
+      input{
+        display: block;
+        outline: none;
+        border: 1px solid lightgray;
+        border-radius: 3px;
+        transition: 0.5s;
+        padding-left: 50px;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        box-shadow: 0 3px 6px $light-black, 0 3px 6px $light-black;
+        box-sizing: border-box;
+        &:hover,
+        &:focus{
+          border: 1px solid $blue;
+          box-shadow: 0 0 5px $blue;
+        }
+        &:hover ~ i,
+        &:focus ~ i{
+          background-color: $blue;
+        }
+        &::placeholder{
+          font-size: 13px;
+          color: gray;
+        }
+      }
+      i{
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: 0.5s;
+        width: 40px;
+        height: 100%;
+        text-align: center;
+        line-height: 40px;
+        background-color: lightgray;
+        color: white;
+        border-radius: 3px 0px 0px 3px;
+        font-size: 23px;
+      }
+    }
+    input[type="submit"]{
+      margin-top: 10px;
+      box-shadow: 0 3px 6px $light-black, 0 3px 6px $light-black;
+      background-color: $dark-red;
+      color: white;
+      padding: 12px 0;
+      font-size: 15px;
+    }
+  }
+  strong{
+    font-size: 13px;
+    margin-top: 15px;
+    color:$dark-red;
+    font-weight: bold;
+  }
+}

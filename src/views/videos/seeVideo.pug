@@ -1,15 +1,85 @@
 extends ../layout.pug
 include ../mixins/mixinVideo.pug
+include ../mixins/mixinVideoPlayer.pug
+include ../mixins/mixinVideoDetail.pug
 
 block content 
-  h1 seeVideo
+  .video-detail__container
+    .video-detail__main
+      +mixinVideoPlayer(video)
+      .video__info
+        h5.video__title=video.title
+        .video__viewDate
+          if true
+            span 조회수   
+            span.video__views 1
+          else 
+            span 조회수   
+            span.video__views
+          em •
+          span.video__date #{new Date(video.createdAt).toISOString().substring(0,10)}
+          if loggedInUser
+            if String(user._id) === String(loggedInUser._id)
+              a(href=`${video._id}/edit`) 
+                button 비디오 수정
+        .division-line
+        .video__author
+          .video__author__avatar
+            img(src=video.user.avatarUrl)
+          a(href=`/users/${video.user.username}`)=video.user.username
+        .video__description 
+          pre #{video.description}
+        .division-line
+      .video__comments 
+        if true
+          span.video__comment-number
+            |댓글   
+            span#jsCommentNumber 1
+            |개
+        else if true
+          span.video__comment-number 
+            |댓글  
+            span#jsCommentNumber 0
+            |개
+        else
+          span.video__comment-number
+            |댓글   
+            span#jsCommentNumber
+            |개
+        form.add__comment#jsAddComment
+          if loggedInUser===null
+            img(src="/images/comment_user.png")
+          else 
+            if loggedInUser.avatarUrl
+              img(src=loggedInUser.avatarUrl)
+            else 
+              img(src="/images/comment_user.png")
+          input(type="text" placeholder="공개 댓글 추가..." name="comment")
+        
+        ul.video__comments-list#jsCommentList
+          //- each comment in video.comments.reverse()
+          //-   li(class="comment__item" id=comment.id)
+          //-     .comment__image
+          //-       if comment.avatarUrl===null
+          //-         a(href=routes.userDetail(comment.creator)) 
+          //-           img(src="/images/comment_user.png")
+          //-       else 
+          //-         if comment.avatarUrl
+          //-           a(href=routes.userDetail(comment.creator))
+          //-             img(src=comment.avatarUrl)
+          //-         else 
+          //-           a(href=routes.userDetail(comment.creator))
+          //-             img(src="/images/comment_user.png")
+          //-     .comment__content
+          //-       .comment__author 
+          //-         span
+          //-           a(href=routes.userDetail(comment.creator)) #{comment.name}
+          //-         span #{comment.createdAt.getFullYear()}-#{`${comment.createdAt.getMonth()+1}` < 10 ? `0${comment.createdAt.getMonth()+1}` : `${comment.createdAt.getMonth()+1}`}-#{`${comment.createdAt.getDate()}` < 10 ? `0${comment.createdAt.getDate()}` : `${comment.createdAt.getDate()}`}
+          //-         if loggedInUser && (`${comment.creator}` === loggedInUser.id)
+          //-           button.comment__delete
+          //-             i.fas.fa-times-circle
+          //-       .comment__description #{comment.text}
 
-  +mixinVideo(video)
-
-  h3 user._id: #{user._id}
-  h3 loggedInUser._id: #{loggedInUser._id}
-
-  if String(user._id) === String(loggedInUser._id)
-    a(href=`${video._id}/edit`) Edit Video
-    br
-    a(href=`${video._id}/delete`) Delete Video
+    .video-detail__aside
+      each video in videos
+        +mixinVideoDetail(video)

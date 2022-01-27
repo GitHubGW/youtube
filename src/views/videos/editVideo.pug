@@ -1,13 +1,17 @@
 extends ../layout.pug
 
 block content 
-  h1 editVideo
-
-  form(method="POST")
-    h2 제목
-    input(name="title" type="text" placeholder="제목" value=video.title required)
-    h2 설명
-    input(name="description" type="text" placeholder="설명" value=video.description)
-    h2 해시태그
-    input(name="hashtags" type="text" placeholder="해시태그" value=video.hashtags.join())
-    input(type="submit" value="비디오 수정")
+  .form-container
+    include ../components/youtube.pug
+    form(method="POST")
+      .form__input
+        input(name="title" type="text" placeholder="제목" value=video.title required)
+        i.fa.fa-edit
+      .form__input
+        input(name="hashtags" type="text" placeholder="해시태그" value=video.hashtags.join())
+        i.fas.fa-hashtag
+      textarea(name="description" type="text" placeholder=video.description)
+      input(type="submit" value="비디오 수정")
+    a.form-container__link(href=`/videos/${video._id}/delete`) 
+      button.delete 비디오 삭제
+    include ../components/errorMessage.pug

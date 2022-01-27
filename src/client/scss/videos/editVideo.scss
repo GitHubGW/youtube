@@ -1,0 +1,19 @@
+.form-container{
+  form{
+    textarea{
+      height: 100px;
+      line-height: 20px;
+    }
+  }
+  .form-container__link{
+    display: inline-block;
+    width: 100%;
+    max-width: $width;
+    margin-top:10px;
+    button{
+      padding: 12px 0;
+      background-color: $black;
+      color:white;
+    }
+  }
+}
