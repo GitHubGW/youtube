@@ -8,7 +8,10 @@ module.exports = {
   watchOptions: {
     ignored: /node_modules/,
   },
-  entry: "./src/client/ts/main.ts",
+  entry: {
+    main: "./src/client/ts/main.ts",
+    videoPlayer: "./src/client/ts/videoPlayer.ts",
+  },
   plugins: [new MiniCssExtractPlugin({ filename: "css/style.css" })],
   module: {
     rules: [
@@ -24,7 +27,7 @@ module.exports = {
     ],
   },
   output: {
-    filename: "js/main.js",
+    filename: "js/[name].js",
     path: path.resolve(__dirname, "assets"),
     clean: true,
   },
