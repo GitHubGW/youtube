@@ -83,3 +83,6 @@ block content
     .video-detail__aside
       each video in videos
         +mixinVideoDetail(video)
+
+block script
+  script(src="/assets/js/videoPlayer.js") 

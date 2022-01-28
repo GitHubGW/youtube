@@ -1,7 +1,7 @@
 mixin mixinThumbnail(video)
   .thumbnailBlock
     a(href=`/videos/${video._id}`)
-      video.thumbnailBlock__thumbnail(src=`/${video.videoUrl}`, poster="", controls=false muted="muted")
+      video(class="thumbnailBlock__thumbnail" src=`/${video.videoUrl}`, poster="", controls=false muted="muted")
       .thumbnail__container
         .thumbnailBlock__main
           h3.thumbnailBlock__title #{video.title}
