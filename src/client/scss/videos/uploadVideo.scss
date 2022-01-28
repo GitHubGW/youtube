@@ -15,7 +15,7 @@
       margin-bottom: 10px;
     }
     .form__input{
-      .recordBtn{
+      .recordBtn {
         padding:12px 0;
         background-color: $black;
         color: white;
@@ -46,13 +46,11 @@
         height: 100%;
         box-shadow: 0 3px 6px $light-black, 0 3px 6px $light-black;
         box-sizing: border-box;
-        &:hover,
-        &:focus{
+        &:hover, &:focus{
           border: 1px solid $blue;
           box-shadow: 0 0 5px $blue;
         }
-        &:hover ~ i,
-        &:focus ~ i{
+        &:hover ~ i, &:focus ~ i{
           background-color: $blue;
         }
         &::placeholder{
@@ -83,11 +81,5 @@
       padding: 12px 0;
       font-size: 15px;
     }
-  }
-  strong{
-    font-size: 13px;
-    margin-top: 15px;
-    color:$dark-red;
-    font-weight: bold;
   }
 }

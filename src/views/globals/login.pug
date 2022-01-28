@@ -1,8 +1,8 @@
-extends ../layout.pug
+extends ../layout
 
 block content
   .form-container 
-    include ../components/youtube.pug
+    include ../components/youtube
     form(method="POST")
       .form__input
         input(name="email" type="email" placeholder="이메일" required)
@@ -12,4 +12,4 @@ block content
         i.fas.fa-unlock
       input(type="submit" value="로그인")
     include ../components/socialLogin
-    include ../components/errorMessage.pug
+    include ../components/errorMessage

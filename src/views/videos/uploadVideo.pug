@@ -1,4 +1,4 @@
-extends ../layout.pug
+extends ../layout
 
 block content 
   .upload-container
@@ -22,3 +22,4 @@ block content
         i.fas.fa-hashtag
       textarea(name="description" placeholder="설명" maxlength="100")
       input(type="submit" value="업로드")
+    include ../components/errorMessage

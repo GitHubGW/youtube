@@ -1,8 +1,8 @@
-extends ../layout.pug
+extends ../layout
 
 block content 
   .form-container 
-    include ../components/youtube.pug
+    include ../components/youtube
     form(method="POST" enctype="multipart/form-data")
       .fileUpload.form__input
         input(id="avatar" name="avatar" type="file" placeholder="이미지" accept="image/*")
@@ -14,4 +14,4 @@ block content
         input(name="email" type="email" placeholder="이메일" value=loggedInUser.email)
         i.fa.fa-envelope
       input(type="submit" value="프로필 업데이트")
-    include ../components/errorMessage.pug
+    include ../components/errorMessage

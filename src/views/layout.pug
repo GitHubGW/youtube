@@ -9,11 +9,9 @@ html(lang="ko")
     link(rel="stylesheet" href="/assets/css/style.css")
     title #{pageTitle} - YouTube
   body 
-    include components/header.pug
-
+    include components/header
     main
-      block content
-      
-    include components/footer.pug
-
+      block content 
+    include components/footer
+    
     script(src="/assets/js/main.js")

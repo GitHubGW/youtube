@@ -15,6 +15,8 @@
 @import "./components/socialLogin";
 @import "./components/404";
 @import "./components/errorMessage";
+@import "./components/sideBar";
+
 
 // globals
 @import "./globals/home";
@@ -43,7 +45,7 @@ body {
 }
 main {
   width: 100%;
-  max-width: 1400px;
+  max-width: $max-width;
   margin: 0 auto;
   min-height: 75vh;
 }

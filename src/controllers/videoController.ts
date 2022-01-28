@@ -9,7 +9,7 @@ export const handleSeeVideo = async (req: Request, res: Response): Promise<void>
       params: { id },
     } = req;
     const foundVideo: VideoInterface | null = await Video.findById(id).populate("user");
-    const foundAllVideos: VideoInterface[] = await Video.find({});
+    const foundAllVideos: VideoInterface[] = await Video.find({}).populate("user");
 
     if (foundVideo === null) {
       throw new Error();

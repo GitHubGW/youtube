@@ -1,8 +1,8 @@
-extends ../layout.pug
+extends ../layout
 
 block content 
   .form-container
-    include ../components/youtube.pug
+    include ../components/youtube
     form(method="POST")
       .form__input
         input(name="title" type="text" placeholder="제목" value=video.title required)
@@ -14,4 +14,4 @@ block content
       input(type="submit" value="비디오 수정")
     a.form-container__link(href=`/videos/${video._id}/delete`) 
       button.delete 비디오 삭제
-    include ../components/errorMessage.pug
+    include ../components/errorMessage
