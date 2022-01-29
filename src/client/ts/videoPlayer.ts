@@ -4,8 +4,26 @@ const playButton: HTMLSpanElement | null = document.querySelector("#jsPlayButton
 const volume: HTMLInputElement | null = document.querySelector("#jsVolume");
 const volumeButton: HTMLSpanElement | null = document.querySelector("#jsVolumeButton");
 const fullScreen: HTMLSpanElement | null = document.querySelector("#jsFullScreen");
+const videoCurrentTime: HTMLSpanElement | null = document.querySelector("#jsVideoCurrentTime");
+const videoDuration: HTMLSpanElement | null = document.querySelector("#jsVideoDuration");
 
 let volumeValue: string | undefined = volume?.value;
+
+const handleVideoTime = () => {
+  if (video && videoDuration) {
+    const duration: number = Math.ceil(video.duration);
+    const parsedDuration: string = new Date(duration * 1000).toTimeString().substring(3, 8);
+    videoDuration.innerText = parsedDuration;
+  }
+};
+
+const handleTimeUpdate = () => {
+  if (video && videoCurrentTime) {
+    const currentTime: number = Math.ceil(video.currentTime);
+    const parsedCurrentTime: string = new Date(currentTime * 1000).toTimeString().substring(3, 8);
+    videoCurrentTime.innerText = parsedCurrentTime;
+  }
+};
 
 const handlePlayButton = async (): Promise<void> => {
   if (video && playButton) {
@@ -47,6 +65,8 @@ const handleVolumeButton = (): void => {
 
 const handleFullScreen = (): void => {};
 
+video?.addEventListener("canplay", handleVideoTime);
+video?.addEventListener("timeupdate", handleTimeUpdate);
 playButton?.addEventListener("click", handlePlayButton);
 volume?.addEventListener("input", handleVolume);
 volumeButton?.addEventListener("click", handleVolumeButton);
