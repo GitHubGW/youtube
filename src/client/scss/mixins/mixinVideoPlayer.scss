@@ -20,7 +20,7 @@
     position: absolute;
     z-index: 9;
     bottom: 13px;
-    width: 95%;
+    width: 90%;
     background-color: rgba(0, 0, 0, 0.77);
     padding: 0px 24px;
     display: flex;
@@ -43,9 +43,11 @@
         align-items: center;
         flex: auto;
         .videoPlayer__range{
+          padding:0;
           max-width: none;
           margin-right: 15px;
           height: 40px;
+          outline: none;
         }
         span{
           display: flex;
