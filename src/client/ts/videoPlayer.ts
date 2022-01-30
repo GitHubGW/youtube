@@ -3,7 +3,7 @@ const video: HTMLVideoElement | null = document.querySelector("video");
 const playButton: HTMLSpanElement | null = document.querySelector("#jsPlayButton");
 const volume: HTMLInputElement | null = document.querySelector("#jsVolume");
 const volumeButton: HTMLSpanElement | null = document.querySelector("#jsVolumeButton");
-const fullScreen: HTMLSpanElement | null = document.querySelector("#jsFullScreen");
+const fullScreenButton: HTMLSpanElement | null = document.querySelector("#jsFullScreenButton");
 const videoCurrentTime: HTMLSpanElement | null = document.querySelector("#jsVideoCurrentTime");
 const videoDuration: HTMLSpanElement | null = document.querySelector("#jsVideoDuration");
 const videoTimeline: HTMLInputElement | null = document.querySelector("#jsVideoTimeline");
@@ -45,18 +45,6 @@ const handlePlayVideo = async (): Promise<void> => {
   }
 };
 
-const handleSetVolume = (): void => {
-  if (video && volume && volumeButton) {
-    if (volume.value === "0") {
-      volumeButton.innerHTML = `<i class="fas fa-volume-mute"></i>`;
-    } else if (volume.value > "0") {
-      volumeButton.innerHTML = `<i class="fas fa-volume-up"></i>`;
-    }
-    video.volume = +volume.value;
-    volumeValue = volume.value;
-  }
-};
-
 const handleMuteVolume = (): void => {
   if (video && volume && volumeButton) {
     if (video.muted === true) {
@@ -71,17 +59,40 @@ const handleMuteVolume = (): void => {
   }
 };
 
+const handleChangeFullScreen = async (): Promise<void> => {
+  if (fullScreenButton) {
+    const fullscreenElement: Element | null = document.fullscreenElement;
+    if (fullscreenElement === null) {
+      await videoPlayer?.requestFullscreen();
+      fullScreenButton.innerHTML = `<i class="fas fa-compress"></i>`;
+    } else if (fullscreenElement !== null) {
+      await document.exitFullscreen();
+      fullScreenButton.innerHTML = `<i class="fas fa-expand"></i>`;
+    }
+  }
+};
+
+const handleSetVolume = (): void => {
+  if (video && volume && volumeButton) {
+    if (volume.value === "0") {
+      volumeButton.innerHTML = `<i class="fas fa-volume-mute"></i>`;
+    } else if (volume.value > "0") {
+      volumeButton.innerHTML = `<i class="fas fa-volume-up"></i>`;
+    }
+    video.volume = +volume.value;
+    volumeValue = volume.value;
+  }
+};
+
 const handleSetTimeline = (event: any): void => {
   if (video) {
     video.currentTime = +event.target.value;
   }
 };
 
-const handleFullScreen = (): void => {};
-
-const handlePressSpace = (event: any): void => {
+const handlePressSpace = async (event: any): Promise<void> => {
   if (event.code === "Space") {
-    handlePlayVideo();
+    await handlePlayVideo();
   }
 };
 
@@ -89,8 +100,8 @@ video?.addEventListener("canplay", handleSetDuration);
 video?.addEventListener("timeupdate", handleSetCurrentTime);
 video?.addEventListener("click", handlePlayVideo);
 playButton?.addEventListener("click", handlePlayVideo);
-volume?.addEventListener("input", handleSetVolume);
 volumeButton?.addEventListener("click", handleMuteVolume);
+fullScreenButton?.addEventListener("click", handleChangeFullScreen);
+volume?.addEventListener("input", handleSetVolume);
 videoTimeline?.addEventListener("input", handleSetTimeline);
-fullScreen?.addEventListener("click", handleFullScreen);
 window.addEventListener("keypress", handlePressSpace);
