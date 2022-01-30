@@ -7,8 +7,10 @@ const fullScreenButton: HTMLSpanElement | null = document.querySelector("#jsFull
 const videoCurrentTime: HTMLSpanElement | null = document.querySelector("#jsVideoCurrentTime");
 const videoDuration: HTMLSpanElement | null = document.querySelector("#jsVideoDuration");
 const videoTimeline: HTMLInputElement | null = document.querySelector("#jsVideoTimeline");
+const videoPlayerControls: HTMLDivElement | null = document.querySelector("#jsVideoPlayerControls");
 
 let volumeValue: string | undefined = volume?.value;
+let setTimeoutId: NodeJS.Timeout | null = null;
 
 const handleSetDuration = (): void => {
   if (video && videoDuration && videoTimeline) {
@@ -90,9 +92,28 @@ const handleSetTimeline = (event: any): void => {
   }
 };
 
-const handlePressSpace = async (event: any): Promise<void> => {
+const handlePressSpace = async (event: KeyboardEvent): Promise<void> => {
   if (event.code === "Space") {
     await handlePlayVideo();
+  }
+};
+
+const hanldeShowVideoControl = (): void => {
+  if (videoPlayerControls) {
+    videoPlayerControls.style.opacity = String(1);
+    if (setTimeoutId) {
+      clearTimeout(setTimeoutId);
+      setTimeoutId = null;
+    }
+    setTimeoutId = setTimeout(() => {
+      videoPlayerControls.style.opacity = String(0);
+    }, 3000);
+  }
+};
+
+const hanldeHideVideoControl = (): void => {
+  if (videoPlayerControls) {
+    videoPlayerControls.style.opacity = String(0);
   }
 };
 
@@ -102,6 +123,9 @@ video?.addEventListener("click", handlePlayVideo);
 playButton?.addEventListener("click", handlePlayVideo);
 volumeButton?.addEventListener("click", handleMuteVolume);
 fullScreenButton?.addEventListener("click", handleChangeFullScreen);
+video?.addEventListener("dblclick", handleChangeFullScreen);
 volume?.addEventListener("input", handleSetVolume);
 videoTimeline?.addEventListener("input", handleSetTimeline);
 window.addEventListener("keypress", handlePressSpace);
+videoPlayer?.addEventListener("mousemove", hanldeShowVideoControl);
+videoPlayer?.addEventListener("mouseleave", hanldeHideVideoControl);

@@ -1,7 +1,7 @@
 mixin mixinVideoPlayer(video={})
   .videoPlayer#jsVideoPlayer
     video(src=`/${video.videoUrl}`, controls=false) 
-    .videoPlayer__controls 
+    .videoPlayer__controls#jsVideoPlayerControls
 
       .videoPlayer__columns
         span#jsPlayButton
