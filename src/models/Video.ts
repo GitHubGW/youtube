@@ -1,6 +1,6 @@
-import mongoose, { Schema, Types } from "mongoose";
+import mongoose, { Document, Schema, Types } from "mongoose";
 
-export interface VideoInterface {
+export interface VideoInterface extends Document {
   _id: Types.ObjectId;
   user: Types.ObjectId;
   videoUrl: string;
