@@ -117,6 +117,15 @@ const hanldeHideVideoControl = (): void => {
   }
 };
 
+const handleFetch = async (): Promise<void> => {
+  if (video) {
+    const {
+      dataset: { videoId },
+    } = video;
+    await fetch(`/api/videos/${videoId}/views`, { method: "POST" });
+  }
+};
+
 video?.addEventListener("canplay", handleSetDuration);
 video?.addEventListener("timeupdate", handleSetCurrentTime);
 video?.addEventListener("click", handlePlayVideo);
@@ -129,3 +138,4 @@ videoTimeline?.addEventListener("input", handleSetTimeline);
 window.addEventListener("keypress", handlePressSpace);
 videoPlayer?.addEventListener("mousemove", hanldeShowVideoControl);
 videoPlayer?.addEventListener("mouseleave", hanldeHideVideoControl);
+video?.addEventListener("ended", handleFetch);
