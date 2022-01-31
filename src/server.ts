@@ -8,6 +8,7 @@ import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import MongoStore from "connect-mongo";
+import apiRouter from "./routers/apiRouter";
 
 const PORT: number = 4000;
 const app: Express = express();
@@ -32,6 +33,7 @@ app.use("/images", express.static("src/images"));
 app.use("/", globalRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
+app.use("/api", apiRouter);
 
 app.listen(PORT, () => {
   console.log(`🚀 http://localhost:${PORT}`);
