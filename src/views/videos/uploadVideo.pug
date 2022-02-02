@@ -3,9 +3,9 @@ extends ../layout
 block content 
   .upload-container
     .record-container#jsRecorderContainer
-      video#jsVideoPreview
+      video(id="jsVideoPreview")
       .form__input
-        button.recordBtn#jsRecordBtn 녹화 시작
+        button.recordBtn#jsRecordButton 녹화 시작
 
     form(method="POST" enctype="multipart/form-data")
       .fileUpload.form__input
@@ -23,3 +23,6 @@ block content
       textarea(name="description" placeholder="설명" maxlength="100")
       input(type="submit" value="업로드")
     include ../components/errorMessage
+
+block script
+  script(src="/assets/js/videoRecorder.js") 
