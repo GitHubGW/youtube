@@ -8,7 +8,6 @@ const videoCurrentTime: HTMLSpanElement | null = document.querySelector("#jsVide
 const videoDuration: HTMLSpanElement | null = document.querySelector("#jsVideoDuration");
 const videoTimeline: HTMLInputElement | null = document.querySelector("#jsVideoTimeline");
 const videoPlayerControls: HTMLDivElement | null = document.querySelector("#jsVideoPlayerControls");
-
 let volumeValue: string | undefined = volume?.value;
 let setTimeoutId: NodeJS.Timeout | null = null;
 
