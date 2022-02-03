@@ -3,7 +3,7 @@ import "./db";
 import express, { Express } from "express";
 import morgan from "morgan";
 import session from "express-session";
-import { localsMiddleware } from "./middlewares";
+import { crossOriginMiddleware, localsMiddleware } from "./middlewares";
 import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
@@ -27,9 +27,11 @@ app.use(
   })
 );
 app.use(localsMiddleware);
+app.use(crossOriginMiddleware);
 app.use("/uploads", express.static("uploads"));
 app.use("/assets", express.static("assets"));
 app.use("/images", express.static("src/images"));
+app.use("/node_modules", express.static("node_modules/@ffmpeg/core/dist"));
 app.use("/", globalRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);

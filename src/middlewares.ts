@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import multer from "multer";
 
 export const localsMiddleware = (req: Request, res: Response, next: NextFunction): void => {
-  // console.log("localsMiddleware", req.session.loggedInUser, req.session.isLoggedIn);
   res.locals.loggedInUser = {};
 
   if (req.session.isLoggedIn === true) {
@@ -26,6 +25,12 @@ export const privateMiddleware = (req: Request, res: Response, next: NextFunctio
   } else {
     return res.redirect("/login");
   }
+};
+
+export const crossOriginMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  next();
 };
 
 export const avatarMulterMiddleware: multer.Multer = multer({ dest: "uploads/avatars/", limits: { fileSize: 20000000 } });
