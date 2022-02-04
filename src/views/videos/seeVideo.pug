@@ -25,7 +25,7 @@ block content
         .division-line
         .video__author
           .video__author__avatar
-            img(src=video.user.avatarUrl)
+            img(src=video.user.avatarUrl crossorigin)
           a(href=`/users/${video.user.username}`)=video.user.username
         .video__description 
           pre #{video.description}
@@ -48,12 +48,12 @@ block content
             |개
         form.add__comment#jsAddComment
           if loggedInUser===null
-            img(src="/images/comment_user.png")
+            img(src="/images/comment_user.png" crossorigin)
           else 
             if loggedInUser.avatarUrl
-              img(src=loggedInUser.avatarUrl)
+              img(src=loggedInUser.avatarUrl crossorigin)
             else 
-              img(src="/images/comment_user.png")
+              img(src="/images/comment_user.png" crossorigin)
           input(type="text" placeholder="공개 댓글 추가..." name="comment")
         
         ul.video__comments-list#jsCommentList
@@ -62,14 +62,14 @@ block content
           //-     .comment__image
           //-       if comment.avatarUrl===null
           //-         a(href=routes.userDetail(comment.creator)) 
-          //-           img(src="/images/comment_user.png")
+          //-           img(src="/images/comment_user.png" crossorigin)
           //-       else 
           //-         if comment.avatarUrl
           //-           a(href=routes.userDetail(comment.creator))
-          //-             img(src=comment.avatarUrl)
+          //-             img(src=comment.avatarUrl crossorigin)
           //-         else 
           //-           a(href=routes.userDetail(comment.creator))
-          //-             img(src="/images/comment_user.png")
+          //-             img(src="/images/comment_user.png" crossorigin)
           //-     .comment__content
           //-       .comment__author 
           //-         span

@@ -2,7 +2,7 @@ mixin mixinSearchVideo(video)
   .videoSearch 
     .videoSearch__video
       a(href=`/videos/${video._id}`)
-        video(class="searchVideo" src=`/${video.videoUrl}`, poster="", controls=false, muted="muted")
+        video(class="searchVideo" src=`/${video.videoUrl}`, poster="", controls=false, muted="muted" crossorigin)
     .videoSearch__content
       a(href=`/videos/${video._id}`)
         h4.videoSearch__title #{video.title}
@@ -19,7 +19,7 @@ mixin mixinSearchVideo(video)
       
       .videoSearch__creator 
         a(href=`users/${video.user._id}`)
-          img(src=video.user.avatarUrl)
+          img(src=video.user.avatarUrl crossorigin)
           h5 #{video.user.username}
       
       .videoSearch_description  

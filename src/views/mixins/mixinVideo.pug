@@ -1,13 +1,13 @@
 mixin mixinVideo(video)
   .videoBlock
     a(href=`/videos/${video.id}`)
-      video(class="videoBlock__thumbnail" src=`/${video.videoUrl}`, poster="", controls=false muted="muted")
+      video(class="videoBlock__thumbnail" src=`/${video.videoUrl}`, poster="", controls=false muted="muted" crossorigin)
       .videoBlock__thumbnail__content 
         .videoBlock__thumbnail__image
           if video.user.avatarUrl
-            img(src=video.user.avatarUrl)
+            img(src=video.user.avatarUrl crossorigin)
           else 
-            img(src="/images/profile_user.png")
+            img(src="/images/profile_user.png" crossorigin)
         .videoBlock__thumbnail__main
           h4.videoBlock__title #{video.title}
           h5 #{video.user.name}
