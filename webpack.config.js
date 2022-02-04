@@ -12,6 +12,7 @@ module.exports = {
     main: "./src/client/ts/main.ts",
     videoPlayer: "./src/client/ts/videoPlayer.ts",
     videoRecorder: "./src/client/ts/videoRecorder.ts",
+    thumbnailVideo: "./src/client/ts/thumbnailVideo.ts",
   },
   plugins: [new MiniCssExtractPlugin({ filename: "css/style.css" })],
   module: {

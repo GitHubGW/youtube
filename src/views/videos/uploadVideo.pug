@@ -5,20 +5,20 @@ block content
     .record-container#jsRecorderContainer
       video(id="jsVideoPreview" crossorigin)
       .form__input
-        button.recordBtn#jsRecordButton 녹화 대기중
+        button(class="recordBtn" id="jsRecordButton" disabled) 로딩중...
 
     form(method="POST" enctype="multipart/form-data")
       .fileUpload.form__input
-        input(id="video" name="video" type="file" placeholder="비디오" accept="video/*" required)
+        input(type="file" name="video" id="video" accept="video/*" required)
         i.fas.fa-video 
       .fileUpload.form__input
-        input(type="file", name="thumbnailFile", id="thumbnailFile" accept="image/*")
+        input(type="file", name="thumbnail", id="thumbnail" accept="image/*")
         i.fas.fa-photo-video
       .form__input
-        input(name="title" type="text" placeholder="제목" maxlength="20" required)
+        input(type="text" name="title" placeholder="제목" maxlength="20" required)
         i.fa.fa-edit
       .form__input
-        input(name="hashtags" type="text" placeholder="해시태그")
+        input(type="text" name="hashtags" placeholder="해시태그")
         i.fas.fa-hashtag
       textarea(name="description" placeholder="설명" maxlength="100")
       input(type="submit" value="업로드")

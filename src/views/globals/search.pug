@@ -16,3 +16,6 @@ block content
           h5 비디오를 찾을 수 없습니다.
         each video in videos 
           +mixinSearchVideo(video)
+
+block script
+  script(src="/assets/js/thumbnailVideo.js")

@@ -4,6 +4,7 @@ export interface VideoInterface extends Document {
   _id: Types.ObjectId;
   user: Types.ObjectId;
   videoUrl: string;
+  thumbnailUrl: string;
   title: string;
   description: string;
   hashtags: string[];
@@ -18,6 +19,7 @@ export interface VideoInterface extends Document {
 const videoSchema: mongoose.Schema<VideoInterface> = new Schema({
   user: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   videoUrl: { type: String, required: true },
+  thumbnailUrl: { type: String, required: false },
   title: { type: String, required: true, trim: true, maxlength: 20 },
   description: { type: String, required: false, trim: true, maxlength: 100 },
   hashtags: [{ type: String, required: false, trim: true }],

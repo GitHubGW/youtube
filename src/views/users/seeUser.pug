@@ -44,3 +44,6 @@ block content
           .uploaded-videos-container
             each video in user.videos
               +mixinThumbnail(video)
+
+block script
+  script(src="/assets/js/thumbnailVideo.js")

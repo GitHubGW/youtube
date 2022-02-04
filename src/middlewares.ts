@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 import multer from "multer";
 
 export const localsMiddleware = (req: Request, res: Response, next: NextFunction): void => {
@@ -35,4 +35,7 @@ export const crossOriginMiddleware = (req: Request, res: Response, next: NextFun
 
 export const avatarMulterMiddleware: multer.Multer = multer({ dest: "uploads/avatars/", limits: { fileSize: 20000000 } });
 
-export const videoMulterMiddleware: multer.Multer = multer({ dest: "uploads/videos/", limits: { fileSize: 50000000 } });
+export const videoMulterMiddleware = multer({ dest: "uploads/videos/", limits: { fileSize: 50000000 } }).fields([
+  { name: "video", maxCount: 1 },
+  { name: "thumbnail", maxCount: 1 },
+]);

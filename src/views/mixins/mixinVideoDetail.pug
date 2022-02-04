@@ -2,7 +2,7 @@ mixin mixinVideoDetail(video)
   .videoDetail
     .videoDetail__video
       a(href=`/videos/${video._id}`)
-        video(src=`/${video.videoUrl}`, poster="", controls=true, muted="muted" crossorigin)
+        video(id="jsThumbnailVideo" src=`/${video.videoUrl}` poster=`/${video.thumbnailUrl}` controls=false muted="muted" crossorigin)
     .videoDetail__content
       a(href=`/videos/${video._id}`)
         h4.videoDetail__title #{video.title}

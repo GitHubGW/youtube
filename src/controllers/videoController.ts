@@ -73,15 +73,23 @@ export const handleGetUploadVideo = (req: Request, res: Response): void => {
   return res.render("videos/uploadVideo", { pageTitle: "비디오 업로드" });
 };
 
-export const handlePostUploadVideo = async (req: Request, res: Response): Promise<void> => {
+export const handlePostUploadVideo = async (req: any, res: Response): Promise<void> => {
   try {
     const {
       body: { title, description, hashtags },
       session: { loggedInUser },
-      file,
+      files,
     } = req;
+
     const formattedHashtags: string[] = hashtags.split(",").map((hashtag: string) => (hashtag.startsWith("#") ? hashtag : `#${hashtag}`));
-    const createdVideo: VideoInterface = await Video.create({ user: loggedInUser?._id, title, description, hashtags: formattedHashtags, videoUrl: file?.path });
+    const createdVideo: VideoInterface = await Video.create({
+      user: loggedInUser?._id,
+      videoUrl: files.video[0].path,
+      thumbnailUrl: files.thumbnail[0].path,
+      title,
+      description,
+      hashtags: formattedHashtags,
+    });
     const foundUser: UserInterface | null = await User.findById(loggedInUser?._id);
 
     if (foundUser === null) {
