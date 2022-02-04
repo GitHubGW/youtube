@@ -5,20 +5,26 @@
   align-items: center;
   margin-top: 90px;
   .record-container{
-    width: 100%;
-    max-width: $width;
-    margin-bottom: 18px;
+    width: 600px;
+    height: 420px;
+    margin-bottom: 65px;
     video{
       background-color: #222222;
       width: 100%;
-      height: 220px;
+      height: 100%;
       margin-bottom: 10px;
+      border-radius: 5px;
     }
     .form__input{
+      text-align: center;
       .recordBtn {
         padding:12px 0;
         background-color: $black;
         color: white;
+      }
+      .recordBtn[disabled]{
+        background-color: lightgray;
+        cursor: none;
       }
     }
   }

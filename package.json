@@ -1,10 +1,10 @@
 {
-  "name": "youtube-portfolio",
+  "name": "youtube",
   "version": "1.0.0",
-  "description": "youtube-portfolio",
+  "description": "youtube",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GitHubGW/youtube-portfolio.git"
+    "url": "git+https://github.com/GitHubGW/youtube.git"
   },
   "dependencies": {
     "@ffmpeg/core": "^0.10.0",
@@ -49,7 +49,7 @@
   "author": "GW <kowonp@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GitHubGW/youtube-portfolio/issues"
+    "url": "https://github.com/GitHubGW/youtube/issues"
   },
-  "homepage": "https://github.com/GitHubGW/youtube-portfolio#readme"
+  "homepage": "https://github.com/GitHubGW/youtube#readme"
 }

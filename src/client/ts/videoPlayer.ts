@@ -125,6 +125,7 @@ const handleFetch = async (): Promise<void> => {
   }
 };
 
+handlePlayVideo();
 video?.addEventListener("canplay", handleSetDuration);
 video?.addEventListener("timeupdate", handleSetCurrentTime);
 video?.addEventListener("click", handlePlayVideo);
