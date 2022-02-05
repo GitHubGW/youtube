@@ -97,7 +97,7 @@ export const handlePostUploadVideo = async (req: any, res: Response): Promise<vo
       throw new Error();
     }
 
-    await User.findByIdAndUpdate(loggedInUser?._id, { $set: { videos: [...foundUser.videos, createdVideo] } });
+    await User.findByIdAndUpdate(loggedInUser?._id, { $set: { videos: [...(foundUser.videos as []), createdVideo] } });
     req.flash("success", "성공적으로 비디오를 업로드하였습니다.");
     return res.redirect("/");
   } catch (error) {
@@ -124,7 +124,7 @@ export const handleDeleteVideo = async (req: Request, res: Response): Promise<vo
     }
 
     await Video.findByIdAndDelete(id);
-    const filteredVideos: Types.ObjectId[] = foundUser.videos.filter((video) => String(video._id) !== String(foundVideo._id));
+    const filteredVideos: Types.ObjectId[] | undefined = foundUser.videos?.filter((video) => String(video._id) !== String(foundVideo._id));
     await User.findByIdAndUpdate(loggedInUser?._id, { $set: { videos: filteredVideos } });
     req.flash("success", "성공적으로 비디오를 삭제하였습니다.");
     return res.redirect("/");

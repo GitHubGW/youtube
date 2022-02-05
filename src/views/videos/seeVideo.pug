@@ -25,7 +25,10 @@ block content
         .division-line
         .video__author
           .video__author__avatar
-            img(src=video.user.avatarUrl crossorigin)
+            if video.user.avatarUrl
+              img(src=video.user.avatarUrl crossorigin)
+            else
+              img(src="/images/profile_user.png" crossorigin)
           a(href=`/users/${video.user.username}`)=video.user.username
         .video__description 
           pre #{video.description}

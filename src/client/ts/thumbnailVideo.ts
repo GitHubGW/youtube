@@ -1,12 +1,11 @@
-const thumbnailVideo: HTMLVideoElement | null = document.querySelector("#jsThumbnailVideo");
+const thumbnailVideos: NodeListOf<HTMLVideoElement> = document.querySelectorAll("#jsThumbnailVideo");
 
-const handleMouseoverVideo = async (): Promise<void> => {
-  await thumbnailVideo?.play();
-};
+thumbnailVideos.forEach((thumbnailVideo: HTMLVideoElement) => {
+  thumbnailVideo.addEventListener("mouseover", (): Promise<void> => {
+    return thumbnailVideo.play();
+  });
 
-const handleMouseoutVideo = (): void => {
-  thumbnailVideo?.load();
-};
-
-thumbnailVideo?.addEventListener("mouseover", handleMouseoverVideo);
-thumbnailVideo?.addEventListener("mouseout", handleMouseoutVideo);
+  thumbnailVideo.addEventListener("mouseout", (): void => {
+    return thumbnailVideo.load();
+  });
+});
