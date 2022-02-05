@@ -1,3 +1,5 @@
+include ./mixins/mixinFlashMessage
+
 doctype html
 html(lang="ko")
   head
@@ -9,6 +11,13 @@ html(lang="ko")
     link(rel="stylesheet" href="/assets/css/style.css")
     title #{pageTitle} - YouTube
   body 
+    if (messages.success)
+      +mixinFlashMessage("success", messages.success.join())
+    if (messages.fail)
+      +mixinFlashMessage("fail", messages.fail.join())
+    if (messages.info)
+      +mixinFlashMessage("info", messages.info.join())
+
     include components/header
     main
       block content 

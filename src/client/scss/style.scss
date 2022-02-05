@@ -8,6 +8,7 @@
 @import "./mixins/mixinVideoDetail";
 @import "./mixins/mixinSearchVideo";
 @import "./mixins/mixinThumbnail";
+@import "./mixins/mixinFlashMessage";
 
 // components
 @import "./components/header";
@@ -16,7 +17,6 @@
 @import "./components/404";
 @import "./components/errorMessage";
 @import "./components/sideBar";
-
 
 // globals
 @import "./globals/home";
