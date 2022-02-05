@@ -15,6 +15,7 @@ export const publicMiddleware = (req: Request, res: Response, next: NextFunction
   if (req.session.isLoggedIn === undefined) {
     return next();
   } else {
+    req.flash("fail", "로그인하지 않은 사용자만 접근할 수 있습니다.");
     return res.redirect("/");
   }
 };
@@ -23,6 +24,7 @@ export const privateMiddleware = (req: Request, res: Response, next: NextFunctio
   if (req.session.isLoggedIn === true) {
     return next();
   } else {
+    req.flash("fail", "로그인한 사용자만 접근할 수 있습니다.");
     return res.redirect("/login");
   }
 };

@@ -2,6 +2,7 @@ import "dotenv/config";
 import "./db";
 import express, { Express } from "express";
 import morgan from "morgan";
+import flash from "express-flash";
 import session from "express-session";
 import { crossOriginMiddleware, localsMiddleware } from "./middlewares";
 import globalRouter from "./routers/globalRouter";
@@ -16,6 +17,7 @@ const app: Express = express();
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 app.use(morgan("dev"));
+app.use(flash());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({

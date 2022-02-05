@@ -62,6 +62,7 @@ export const handlePostEditVideo = async (req: Request, res: Response): Promise<
 
     const formattedHashtags: string[] = hashtags.split(",").map((hashtag: string) => (hashtag.startsWith("#") ? hashtag : `#${hashtag}`));
     await Video.findByIdAndUpdate(id, { title, description, hashtags: formattedHashtags });
+    req.flash("success", "성공적으로 비디오를 수정하였습니다.");
     return res.redirect(`/videos/${id}`);
   } catch (error) {
     console.log("handlePostEditVideo error");
@@ -97,9 +98,11 @@ export const handlePostUploadVideo = async (req: any, res: Response): Promise<vo
     }
 
     await User.findByIdAndUpdate(loggedInUser?._id, { $set: { videos: [...foundUser.videos, createdVideo] } });
+    req.flash("success", "성공적으로 비디오를 업로드하였습니다.");
     return res.redirect("/");
   } catch (error) {
     console.log("handlePostUploadVideo error");
+    req.flash("fail", "비디오 업로드에 실패하였습니다.");
     return res.status(400).render("videos/uploadVideo", { pageTitle: "비디오 업로드", errorMessage: "비디오 업로드에 실패하였습니다." });
   }
 };
@@ -123,6 +126,7 @@ export const handleDeleteVideo = async (req: Request, res: Response): Promise<vo
     await Video.findByIdAndDelete(id);
     const filteredVideos: Types.ObjectId[] = foundUser.videos.filter((video) => String(video._id) !== String(foundVideo._id));
     await User.findByIdAndUpdate(loggedInUser?._id, { $set: { videos: filteredVideos } });
+    req.flash("success", "성공적으로 비디오를 삭제하였습니다.");
     return res.redirect("/");
   } catch (error) {
     console.log("handleGetDeleteVideo error");

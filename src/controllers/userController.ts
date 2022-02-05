@@ -40,9 +40,11 @@ export const handlePostEditProfile = async (req: Request, res: Response): Promis
     }
 
     req.session.loggedInUser = updatedUser;
+    req.flash("success", "성공적으로 프로필을 업데이트하였습니다.");
     return res.redirect(`/users/${updatedUser?.username}`);
   } catch (error) {
     console.log("handlePostEditProfile error");
+    req.flash("fail", "이미 존재하는 이름 또는 이메일입니다.");
     return res.status(400).render("users/editProfile", { pageTitle: `${req.params.username} 프로필 수정`, errorMessage: "이미 존재하는 이름 또는 이메일입니다." });
   }
 };
@@ -74,9 +76,11 @@ export const handlePostChangePassword = async (req: Request, res: Response): Pro
     const isMatchedPassword: boolean = await bcrypt.compare(oldPassword, foundUser?.password as string);
 
     if (isMatchedPassword === false) {
+      req.flash("fail", "기존 비밀번호가 일치하지 않습니다.");
       return res.status(400).render("users/changePassword", { pageTitle: `${req.params.username} 비밀번호 변경`, errorMessage: "기존 비밀번호가 일치하지 않습니다." });
     }
     if (newPassword !== newPasswordConfirm) {
+      req.flash("fail", "새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.");
       return res
         .status(400)
         .render("users/changePassword", { pageTitle: `${req.params.username} 비밀번호 변경`, errorMessage: "새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다." });
@@ -84,9 +88,11 @@ export const handlePostChangePassword = async (req: Request, res: Response): Pro
 
     const updatedUser: UserInterface | null = await User.findByIdAndUpdate(loggedInUser?._id, { $set: { password: newPassword } }, { new: true });
     await updatedUser?.save();
+    req.flash("success", "성공적으로 비밀번호를 변경하였습니다.");
     return res.redirect(`/users/${loggedInUser?.username}`);
   } catch (error) {
     console.log("handlePostChangeProfile error");
+    req.flash("fail", "비밀번호 변경에 실패하였습니다.");
     return res.status(400).render("users/changePassword", { pageTitle: `${req.params.username} 비밀번호 변경`, errorMessage: "비밀번호 변경에 실패하였습니다." });
   }
 };

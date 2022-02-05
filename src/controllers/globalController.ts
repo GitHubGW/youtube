@@ -53,18 +53,22 @@ export const handlePostJoin = async (req: Request, res: Response): Promise<void>
     const existingUser: boolean = await User.exists({ $or: [{ username }, { email }] });
 
     if (existingUser) {
+      req.flash("fail", "이미 존재하는 이름 또는 이메일입니다.");
       return res.status(400).render("globals/join", { pageTitle: "회원가입", errorMessage: "이미 존재하는 이름 또는 이메일입니다." });
     }
     if (password !== confirmPassword) {
+      req.flash("fail", "비밀번호가 일치하지 않습니다.");
       return res.status(400).render("globals/join", { pageTitle: "회원가입", errorMessage: "비밀번호가 일치하지 않습니다." });
     }
 
     const createdUser: UserInterface = await User.create({ username, email, password });
     req.session.loggedInUser = createdUser;
     req.session.isLoggedIn = true;
+    req.flash("info", "유튜브에 오신 것을 환영합니다.");
     return res.redirect("/");
   } catch (error) {
     console.log("handlePostJoin error");
+    req.flash("fail", "회원가입에 실패하였습니다.");
     return res.status(400).render("globals/join", { pageTitle: "회원가입", errorMessage: "회원가입에 실패하였습니다." });
   }
 };
@@ -81,20 +85,24 @@ export const handlePostLogin = async (req: Request, res: Response): Promise<void
     const foundUser: UserInterface | null = await User.findOne({ email, githubId: null, kakaoId: null });
 
     if (foundUser === null) {
+      req.flash("fail", "존재하지 않는 이메일입니다.");
       return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "존재하지 않는 이메일입니다." });
     }
 
     const isMatchedPassword: boolean = await bcrypt.compare(password, foundUser.password as string);
 
     if (isMatchedPassword === false) {
+      req.flash("fail", "비밀번호가 일치하지 않습니다.");
       return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "비밀번호가 일치하지 않습니다." });
     }
 
     req.session.loggedInUser = foundUser;
     req.session.isLoggedIn = true;
+    req.flash("info", "유튜브에 오신 것을 환영합니다.");
     return res.redirect("/");
   } catch (error) {
     console.log("handlePostLogin error");
+    req.flash("fail", "로그인에 실패하였습니다.");
     return res.status(400).render("globals/login", { pageTitle: "로그인", errorMessage: "로그인에 실패하였습니다." });
   }
 };
@@ -189,6 +197,7 @@ export const handleGitHubAuthEnd = async (req: Request, res: Response): Promise<
     }
   } catch (error) {
     console.log("handleGitHubAuthEnd error");
+    req.flash("fail", "깃허브 로그인에 실패하였습니다.");
     return res.render("globals/login", { errorMessage: "깃허브 로그인에 실패하였습니다." });
   }
 };
@@ -239,6 +248,7 @@ export const handleKakaoAuthEnd = async (req: Request, res: Response): Promise<v
     }
   } catch (error) {
     console.log("handleKakaoAuthEnd error", error);
+    req.flash("fail", "카카오 로그인에 실패하였습니다.");
     return res.render("globals/login", { errorMessage: "카카오 로그인에 실패하였습니다." });
   }
 };
