@@ -15,7 +15,7 @@ mixin mixinSearchVideo(video)
         else 
           h6.videoSearch__views 조회수
         em •
-        h6 #{new Date(video.createdAt).toISOString().substring(0,10)}
+        h6 #{new Date(video.createdAt).toLocaleDateString("ko-KR")}
       
       .videoSearch__creator 
         a(href=`users/${video.user._id}`)

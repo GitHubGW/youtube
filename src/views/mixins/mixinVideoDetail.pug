@@ -19,4 +19,4 @@ mixin mixinVideoDetail(video)
         else 
           h6.videoDetail__views 조회수
         em •
-        h6 #{new Date(video.createdAt).toISOString().substring(0,10)}
+        h6 #{new Date(video.createdAt).toLocaleDateString("ko-KR")}

@@ -17,7 +17,7 @@ block content
             span 조회수   
             span.video__views
           em •
-          span.video__date #{new Date(video.createdAt).toISOString().substring(0,10)}
+          span.video__date #{new Date(video.createdAt).toLocaleDateString("ko-KR")}
           if loggedInUser
             if String(user._id) === String(loggedInUser._id)
               a(href=`${video._id}/edit`) 
@@ -64,7 +64,6 @@ block content
           each comment in video.comments.reverse()
             li(class="comment__item" id=comment._id)
               .comment__image
-                #{console.log("hi",comment.createdAt)}
                 if !comment.user.avatarUrl
                   a(href=`/users/${comment.user.username}`) 
                     img(src="/images/comment_user.png" crossorigin)
@@ -79,7 +78,7 @@ block content
                 .comment__author 
                   span
                     a(href=`/users/${comment.user.username}`) #{comment.user.username}
-                  span #{new Date(comment.createdAt).toISOString().substring(0,10)}
+                  span #{new Date(video.createdAt).toLocaleDateString("ko-KR")}
                   if loggedInUser && (`${comment.user._id}` === loggedInUser._id)
                     button.comment__delete
                       i.fas.fa-times-circle
