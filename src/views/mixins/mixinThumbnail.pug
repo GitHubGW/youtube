@@ -6,9 +6,7 @@ mixin mixinThumbnail(video)
         .thumbnailBlock__main
           h3.thumbnailBlock__title #{video.title}
           h4.thumbnailBlock__description #{video.description}
-        if true
-          h6.thumbnailBlock__views 조회수 1
-        else if true
+        if video.meta.views > 0
+          h6.thumbnailBlock__views 조회수 #{video.meta.views}
+        else if video.meta.views === 0
           h6.thumbnailBlock__views 조회수 0
-        else 
-          h6.thumbnailBlock__views 조회수

@@ -12,11 +12,9 @@ mixin mixinVideo(video)
           h4.videoBlock__title #{video.title}
           h5 #{video.user.name}
           .videoBlock__thumbnail__viewDate
-            if true
-              h6.videoBlock__views 조회수 1 
-            else if false
+            if video.meta.views > 0
+              h6.videoBlock__views 조회수 #{video.meta.views}
+            else if video.meta.views === 0
               h6.videoBlock__views 조회수 0
-            else 
-              h6.videoBlock__views 조회수
             em •
             h6 #{new Date(video.createdAt).toLocaleDateString("ko-KR")}

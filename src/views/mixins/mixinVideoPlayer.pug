@@ -10,9 +10,9 @@ mixin mixinVideoPlayer(video={})
       .videoPlayer__columns
         input(class="videoPlayer__range" id="jsVideoTimeline" type="range" value="0" min="0" step="0.01")
         span
-          span#jsVideoCurrentTime 00:00:00 
-          span / 
-          span#jsVideoDuration 00:00:00 
+          span#jsVideoCurrentTime 00:00
+          span /
+          span#jsVideoDuration 00:00
 
       .videoPlayer__columns.videoPlayer__volume__container
         input(class="videoPlayer__volume" id="jsVolume" type="range" min="0" value="0.6" max="1" step="0.01")

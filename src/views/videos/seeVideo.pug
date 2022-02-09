@@ -10,12 +10,12 @@ block content
       .video__info
         h5.video__title=video.title
         .video__viewDate
-          if true
-            span 조회수   
-            span.video__views 1
-          else 
-            span 조회수   
-            span.video__views
+          if video.meta.views > 0
+            span 조회수
+            span.video__views #{video.meta.views}
+          else if video.meta.views === 0
+            span 조회수
+            span.video__views 0
           em •
           span.video__date #{new Date(video.createdAt).toLocaleDateString("ko-KR")}
           if loggedInUser
@@ -35,20 +35,15 @@ block content
           pre #{video.description}
         .division-line
       .video__comments 
-        if true
+        if video.comments.length > 0
           span.video__comment-number
             |댓글
-            span#jsCommentNumber 1
+            span#jsCommentNumber #{video.comments.length}
             |개
-        else if true
+        else if video.comments.length === 0
           span.video__comment-number 
             |댓글
             span#jsCommentNumber 0
-            |개
-        else
-          span.video__comment-number
-            |댓글
-            span#jsCommentNumber
             |개
         form(class="add__comment" id="jsCommentForm")
           if loggedInUser===null
@@ -60,9 +55,9 @@ block content
               img(src="/images/comment_user.png" crossorigin)
           input(type="text" placeholder="공개 댓글 추가..." name="comment" id="jsCommentInput" min="1")
         
-        ul(class="video__comments-list" id="jsCommentList")
+        ul(class="video__comments-list" id="jsCommentUl")
           each comment in video.comments.reverse()
-            li(class="comment__item" id=comment._id)
+            li(class="comment__item" id="jsCommentLi" data-id=comment._id)
               .comment__image
                 if !comment.user.avatarUrl
                   a(href=`/users/${comment.user.username}`) 
@@ -80,7 +75,7 @@ block content
                     a(href=`/users/${comment.user.username}`) #{comment.user.username}
                   span #{new Date(video.createdAt).toLocaleDateString("ko-KR")}
                   if loggedInUser && (`${comment.user._id}` === loggedInUser._id)
-                    button.comment__delete
+                    button(class="comment__delete" id="jsDeleteCommentButton")
                       i.fas.fa-times-circle
                 .comment__description #{comment.text}
 
