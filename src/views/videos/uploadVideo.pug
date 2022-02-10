@@ -15,12 +15,12 @@ block content
         input(type="file", name="thumbnail", id="thumbnail" accept="image/*" required)
         i.fas.fa-photo-video
       .form__input
-        input(type="text" name="title" placeholder="제목" maxlength="20" required)
+        input(type="text" name="title" placeholder="제목" maxLength=20 required)
         i.fa.fa-edit
       .form__input
-        input(type="text" name="hashtags" placeholder="해시태그")
+        input(type="text" name="hashtags" placeholder="해시태그" maxLength=30)
         i.fas.fa-hashtag
-      textarea(name="description" placeholder="설명" maxlength="100")
+      textarea(name="description" placeholder="설명" maxLength=120)
       input(type="submit" value="업로드")
     include ../components/errorMessage
 

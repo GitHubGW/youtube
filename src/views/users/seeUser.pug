@@ -8,9 +8,9 @@ block content
       .user-profile__header
         .profile__avatar
           if user.avatarUrl===undefined
-            img.u-avatar(src="/images/profile_user.png" crossorigin)
+            img.u-avatar(src="/images/default_user.png" crossorigin)
           else 
-            img.u-avatar(src=user.avatarUrl crossorigin)
+            img.u-avatar(src=`/${user.avatarUrl}` crossorigin)
         .profile__userinfo
           .profile__username
             h4 

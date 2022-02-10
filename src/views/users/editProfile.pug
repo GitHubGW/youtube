@@ -8,10 +8,10 @@ block content
         input(id="avatar" name="avatar" type="file" placeholder="이미지" accept="image/*")
         i.fas.fa-file-image
       .form__input
-        input(name="username" type="text" placeholder="이름" value=loggedInUser.username)
+        input(name="username" type="text" placeholder="이름" value=loggedInUser.username minLength=1 maxLength=15 required)
         i.fa.fa-user
       .form__input
-        input(name="email" type="email" placeholder="이메일" value=loggedInUser.email)
+        input(name="email" type="email" placeholder="이메일" value=loggedInUser.email minLength=1 maxLength=20 required)
         i.fa.fa-envelope
       input(type="submit" value="프로필 업데이트")
     include ../components/errorMessage

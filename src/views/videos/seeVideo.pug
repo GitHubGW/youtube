@@ -27,14 +27,15 @@ block content
           .video__author__avatar
             a(href=`/users/${video.user.username}`)
               if video.user.avatarUrl
-                img(src=video.user.avatarUrl crossorigin)
+                img(src=`/${video.user.avatarUrl}` crossorigin)
               else
-                img(src="/images/profile_user.png" crossorigin)
+                img(src="/images/default_user.png" crossorigin)
           a(href=`/users/${video.user.username}`)=video.user.username
         .video__description 
           pre #{video.description}
         .division-line
       .video__comments 
+
         if video.comments.length > 0
           span.video__comment-number
             |댓글
@@ -46,14 +47,18 @@ block content
             span#jsCommentNumber 0
             |개
         form(class="add__comment" id="jsCommentForm")
-          if loggedInUser===null
-            img(src="/images/comment_user.png" crossorigin)
-          else 
+
+          if isLoggedIn!==true
+            img(src="/images/default_user.png" crossorigin)
+          else
             if loggedInUser.avatarUrl
-              img(src=loggedInUser.avatarUrl crossorigin)
-            else 
-              img(src="/images/comment_user.png" crossorigin)
-          input(type="text" placeholder="공개 댓글 추가..." name="comment" id="jsCommentInput" min="1")
+              img(src=`/${loggedInUser.avatarUrl}` crossorigin)
+            else
+              img(src="/images/default_user.png" crossorigin)
+          if isLoggedIn===true
+            input(type="text" placeholder="공개 댓글 추가..." name="comment" id="jsCommentInput" minLength=1)
+          else
+            input(type="text" placeholder="공개 댓글 추가..." name="comment" id="jsCommentInput" minLength=1 disabled=true)
         
         ul(class="video__comments-list" id="jsCommentUl")
           each comment in video.comments.reverse()
@@ -61,16 +66,16 @@ block content
               .comment__image
                 if !comment.user.avatarUrl
                   a(href=`/users/${comment.user.username}`) 
-                    img(src="/images/comment_user.png" crossorigin)
+                    img(src="/images/default_user.png" crossorigin)
                 else 
                   if comment.user.avatarUrl
                     a(href=`/users/${comment.user.username}`)
-                      img(src=comment.user.avatarUrl crossorigin)
+                      img(src=`/${comment.user.avatarUrl}` crossorigin)
                   else 
                     a(href=`/users/${comment.user.username}`)
-                      img(src="/images/comment_user.png" crossorigin)
+                      img(src="/images/default_user.png" crossorigin)
               .comment__content
-                .comment__author 
+                .comment__author
                   span
                     a(href=`/users/${comment.user.username}`) #{comment.user.username}
                   span #{new Date(video.createdAt).toLocaleDateString("ko-KR")}

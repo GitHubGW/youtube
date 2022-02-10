@@ -41,7 +41,7 @@ const handleCreateCommentForm = (loggedInUser: any, commentId: string, commentIn
   commentDelete.appendChild(commentFontAwesome);
 
   const currentDate: string = new Date().toLocaleDateString("ko-KR");
-  commentImageChild.src = loggedInUser.avatarUrl ? loggedInUser.avatarUrl : "/images/comment_user.png";
+  commentImageChild.src = loggedInUser.avatarUrl ? `/${loggedInUser.avatarUrl}` : "/images/default_user.png";
   commentAuthorFirstSpan.innerText = loggedInUser.username;
   commentAuthorSecondSpan.innerText = currentDate;
   commentDescription.innerText = commentInputValue;
@@ -49,7 +49,7 @@ const handleCreateCommentForm = (loggedInUser: any, commentId: string, commentIn
   commentUl?.prepend(li);
 };
 
-const handleCreateComment = async (event: any) => {
+const handleCreateComment = async (event: any): Promise<void> => {
   event.preventDefault();
 
   try {
