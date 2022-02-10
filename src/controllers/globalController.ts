@@ -204,14 +204,14 @@ export const handleGitHubAuthEnd = async (req: Request, res: Response): Promise<
 
 export const handleKakaoAuthStart = (req: Request, res: Response): void => {
   const KAKAO_REST_API_KEY: string | undefined = process.env.KAKAO_REST_API_KEY;
-  const REDIRECT_URI: string = "http://localhost:4000/kakao/auth/end";
+  const REDIRECT_URI: string = process.env.NODE_ENV === "production" ? "https://youtube-gw.herokuapp.com/kakao/auth/end" : "http://localhost:4000/kakao/auth/end";
   const kakaoAuthorizeUrl: string = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
   return res.redirect(kakaoAuthorizeUrl);
 };
 
 export const handleKakaoAuthEnd = async (req: Request, res: Response): Promise<void> => {
   const KAKAO_REST_API_KEY: string | undefined = process.env.KAKAO_REST_API_KEY;
-  const REDIRECT_URI: string = "http://localhost:4000/kakao/auth/end";
+  const REDIRECT_URI: string = process.env.NODE_ENV === "production" ? "https://youtube-gw.herokuapp.com/kakao/auth/end" : "http://localhost:4000/kakao/auth/end";
   const AUTHORIZE_CODE = req.query.code as string;
   const kakaoAccessTokenUrl: string = `https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${AUTHORIZE_CODE}`;
 

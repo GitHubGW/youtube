@@ -5,7 +5,7 @@ mixin mixinVideo(video)
       .videoBlock__thumbnail__content 
         .videoBlock__thumbnail__image
           if video.user.avatarUrl
-            img(src=`/${video.user.avatarUrl}` crossorigin)
+            img(src=`${video.user.avatarUrl}` crossorigin)
           else 
             img(src="/images/default_user.png" crossorigin)
         .videoBlock__thumbnail__main

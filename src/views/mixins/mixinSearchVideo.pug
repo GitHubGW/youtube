@@ -17,7 +17,7 @@ mixin mixinSearchVideo(video)
       
       .videoSearch__creator
         a(href=`users/${video.user.username}`)
-          img(src=`/${video.user.avatarUrl}` crossorigin)
+          img(src=`${video.user.avatarUrl}` crossorigin)
           h5 #{video.user.username}
       
       .videoSearch_description  
