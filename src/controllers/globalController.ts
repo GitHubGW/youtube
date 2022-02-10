@@ -127,7 +127,7 @@ export const handleSearch = async (req: Request, res: Response): Promise<void> =
       title: {
         $regex: new RegExp(title as string, "i"), // $regex: /title/i
       },
-    });
+    }).populate("user");
 
     if (foundVideos.length === 0) {
       return res.render("globals/search", { pageTitle: "비디오 검색", videos: [], title, errorMessage: "비디오를 찾을 수 없습니다." });

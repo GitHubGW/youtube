@@ -15,9 +15,9 @@ mixin mixinSearchVideo(video)
         em •
         h6 #{new Date(video.createdAt).toLocaleDateString("ko-KR")}
       
-      .videoSearch__creator 
-        a(href=`users/${video.user._id}`)
-          img(src=`${video.user.avatarUrl}` crossorigin)
+      .videoSearch__creator
+        a(href=`users/${video.user.username}`)
+          img(src=`/${video.user.avatarUrl}` crossorigin)
           h5 #{video.user.username}
       
       .videoSearch_description  
