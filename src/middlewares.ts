@@ -30,9 +30,11 @@ export const privateMiddleware = (req: Request, res: Response, next: NextFunctio
 };
 
 export const crossOriginMiddleware = (req: Request, res: Response, next: NextFunction): void => {
-  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-  res.setHeader("Cross-Origin-Embedder-Policy", "credentialless");
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  res.header("Access-Control-Allow-Origin", "https://youtube-gw.herokuapp.com");
+  res.header("Access-Control-Allow-Origin", "http://localhost:4000");
+  res.header("Access-Control-Allow-Credentials", "true");
   next();
 };
 
