@@ -42,10 +42,12 @@
     "webpack-cli": "^4.9.2"
   },
   "scripts": {
-    "tsc": "npx tsc",
-    "dev": "node dist/server.js",
-    "start": "nodemon --exec ts-node src/server.ts --watch",
-    "webpack": "npx webpack"
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "npx webpack --mode=production",
+    "build:server": "npx tsc",
+    "start": "node build/server.js",
+    "dev": "nodemon --exec ts-node src/server.ts --watch",
+    "webpack": "npx webpack --mode=development --watch"
   },
   "keywords": [],
   "author": "GW <kowonp@gmail.com>",

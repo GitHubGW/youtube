@@ -31,7 +31,7 @@ export const privateMiddleware = (req: Request, res: Response, next: NextFunctio
 
 export const crossOriginMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  res.setHeader("Cross-Origin-Embedder-Policy", "credentialless");
   next();
 };
 
