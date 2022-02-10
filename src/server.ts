@@ -40,6 +40,6 @@ app.use("/users", userRouter);
 app.use("/videos", videoRouter);
 app.use("/api", apiRouter);
 
-app.listen(PORT, () => {
-  console.log(`🚀 http://localhost:${PORT}`);
+app.listen(process.env.PORT || PORT, () => {
+  console.log(`🚀 http://localhost:${process.env.PORT || PORT}`);
 });

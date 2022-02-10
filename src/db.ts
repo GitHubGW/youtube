@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb://localhost:27017/youtube");
+mongoose.connect(process.env.DATABASE_URL as string);
 
 const mongooseConnection: mongoose.Connection = mongoose.connection;
 
