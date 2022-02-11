@@ -1,5 +1,14 @@
-import { Request, Response, NextFunction, RequestHandler } from "express";
+import { Request, Response, NextFunction } from "express";
+import AWS from "aws-sdk";
 import multer from "multer";
+import multerS3 from "multer-s3";
+
+const s3: AWS.S3 = new AWS.S3({
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY as string,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY as string,
+  },
+});
 
 export const localsMiddleware = (req: Request, res: Response, next: NextFunction): void => {
   res.locals.loggedInUser = {};
@@ -38,9 +47,17 @@ export const crossOriginMiddleware = (req: Request, res: Response, next: NextFun
   next();
 };
 
-export const avatarMulterMiddleware: multer.Multer = multer({ dest: "uploads/avatars/", limits: { fileSize: 20000000 } });
+export const avatarMulterMiddleware: multer.Multer = multer({
+  dest: "uploads/avatars",
+  limits: { fileSize: 20000000 },
+  storage: process.env.NODE_ENV === "production" ? multerS3({ s3, bucket: "youtube-gw-bucket/avatars", acl: "public-read" }) : undefined,
+});
 
-export const videoMulterMiddleware = multer({ dest: "uploads/videos/", limits: { fileSize: 50000000 } }).fields([
+export const videoMulterMiddleware = multer({
+  dest: "uploads/videos",
+  limits: { fileSize: 50000000 },
+  storage: process.env.NODE_ENV === "production" ? multerS3({ s3, bucket: "youtube-gw-bucket/videos", acl: "public-read" }) : undefined,
+}).fields([
   { name: "video", maxCount: 1 },
   { name: "thumbnail", maxCount: 1 },
 ]);

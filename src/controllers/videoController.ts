@@ -90,8 +90,8 @@ export const handlePostUploadVideo = async (req: any, res: Response): Promise<vo
     const formattedHashtags: string[] = hashtags.split(",").map((hashtag: string) => (hashtag.startsWith("#") ? hashtag : `#${hashtag}`));
     const createdVideo: VideoInterface = await Video.create({
       user: loggedInUser?._id,
-      videoUrl: files.video[0].path,
-      thumbnailUrl: files.thumbnail[0].path,
+      videoUrl: files.video[0].path ? files.video[0].path : files.video[0].location,
+      thumbnailUrl: files.thumbnail[0].path ? files.thumbnail[0].path : files.thumbnail[0].location,
       title,
       description,
       hashtags: formattedHashtags,

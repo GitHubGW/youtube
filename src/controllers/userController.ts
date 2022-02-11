@@ -26,14 +26,19 @@ export const handleGetEditProfile = (req: Request, res: Response): void => {
   return res.render("users/editProfile", { pageTitle: `${req.params.username} 프로필 수정` });
 };
 
-export const handlePostEditProfile = async (req: Request, res: Response): Promise<void> => {
+export const handlePostEditProfile = async (req: any, res: Response): Promise<void> => {
   try {
     const {
       body: { username, email },
       session: { loggedInUser },
       file,
     } = req;
-    const updatedUser: UserInterface | null = await User.findByIdAndUpdate(loggedInUser?._id, { $set: { username, email, avatarUrl: file?.path } }, { new: true });
+
+    const updatedUser: UserInterface | null = await User.findByIdAndUpdate(
+      loggedInUser?._id,
+      { $set: { username, email, avatarUrl: file?.path ? file?.path : file?.location } },
+      { new: true }
+    );
 
     if (updatedUser === null) {
       throw new Error();
