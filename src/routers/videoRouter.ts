@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import { handleGetEditVideo, handlePostEditVideo, handleSeeVideo, handleDeleteVideo, handleGetUploadVideo, handlePostUploadVideo } from "../controllers/videoController";
-import { privateMiddleware, videoMulterMiddleware, deleteVideoMiddleware } from "../middlewares";
+import { privateMiddleware, videoMulterMiddleware, deleteS3VideoMiddleware } from "../middlewares";
 
 const videoRouter: Router = express.Router();
 
@@ -9,6 +9,6 @@ videoRouter.post("/upload", privateMiddleware, videoMulterMiddleware, handlePost
 videoRouter.get("/:id", handleSeeVideo);
 videoRouter.get("/:id([0-9a-f]{24})/edit", privateMiddleware, handleGetEditVideo);
 videoRouter.post("/:id([0-9a-f]{24})/edit", privateMiddleware, handlePostEditVideo);
-videoRouter.get("/:id([0-9a-f]{24})/delete", privateMiddleware, deleteVideoMiddleware, handleDeleteVideo);
+videoRouter.get("/:id([0-9a-f]{24})/delete", privateMiddleware, deleteS3VideoMiddleware, handleDeleteVideo);
 
 export default videoRouter;
