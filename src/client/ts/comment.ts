@@ -42,6 +42,7 @@ const handleCreateCommentForm = (loggedInUser: any, commentId: string, commentIn
 
   const currentDate: string = new Date().toLocaleDateString("ko-KR");
   commentImageChild.src = loggedInUser.avatarUrl ? `${loggedInUser.avatarUrl}` : "/images/default_user.png";
+  commentImageChild.setAttribute("crossorigin", "anonymous");
   commentAuthorFirstSpan.innerText = loggedInUser.username;
   commentAuthorSecondSpan.innerText = currentDate;
   commentDescription.innerText = commentInputValue;

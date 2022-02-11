@@ -1,7 +1,7 @@
 mixin mixinVideo(video)
   .videoBlock
     a(href=`/videos/${video.id}`)
-      video(class="videoBlock__thumbnail" id="jsThumbnailVideo" src=`/${video.videoUrl}` poster=`/${video.thumbnailUrl}` controls=false muted="muted" crossorigin)
+      video(class="videoBlock__thumbnail" id="jsThumbnailVideo" src=`${video.videoUrl}` poster=`${video.thumbnailUrl}` controls=false muted="muted" crossorigin)
       .videoBlock__thumbnail__content 
         .videoBlock__thumbnail__image
           if video.user.avatarUrl

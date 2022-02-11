@@ -2,7 +2,7 @@ mixin mixinSearchVideo(video)
   .videoSearch 
     .videoSearch__video
       a(href=`/videos/${video._id}`)
-        video(class="searchVideo" id="jsThumbnailVideo" src=`/${video.videoUrl}` poster=`/${video.thumbnailUrl}` controls=false muted="muted" crossorigin)
+        video(class="searchVideo" id="jsThumbnailVideo" src=`${video.videoUrl}` poster=`${video.thumbnailUrl}` controls=false muted="muted" crossorigin)
     .videoSearch__content
       a(href=`/videos/${video._id}`)
         h4.videoSearch__title #{video.title}
