@@ -63,7 +63,7 @@ export const videoMulterMiddleware = multer({
   { name: "thumbnail", maxCount: 1 },
 ]);
 
-export const deleteS3AvatarMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+export const deleteS3AvatarMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const {
     file,
     session: { loggedInUser },
@@ -73,12 +73,8 @@ export const deleteS3AvatarMiddleware = (req: Request, res: Response, next: Next
     return next();
   }
 
-  console.log("loggedInUser?.avatarUrl", loggedInUser?.avatarUrl);
-
   const avatarFileName: string = loggedInUser?.avatarUrl.split("avatars/")[1];
-  s3.deleteObject({ Bucket: "youtube-gw-bucket", Key: `avatars/${avatarFileName}` });
-  console.log("avatarFileName", avatarFileName);
-
+  await s3.deleteObject({ Bucket: "youtube-gw-bucket", Key: `avatars/${avatarFileName}` }).promise();
   return next();
 };
 
@@ -89,13 +85,9 @@ export const deleteS3VideoMiddleware = async (req: Request, res: Response, next:
     return next();
   }
 
-  console.log("foundVideo.videoUrl", foundVideo.videoUrl);
-
   const videoFileName: string = foundVideo.videoUrl.split("videos/")[1];
   const thumbnailFileName: string = foundVideo.thumbnailUrl.split("videos/")[1];
-  s3.deleteObject({ Bucket: "youtube-gw-bucket", Key: `videos/${videoFileName}` });
-  s3.deleteObject({ Bucket: "youtube-gw-bucket", Key: `videos/${thumbnailFileName}` });
-  console.log("videoFileName", videoFileName);
-  console.log("thumbnailFileName", thumbnailFileName);
+  await s3.deleteObject({ Bucket: "youtube-gw-bucket", Key: `videos/${videoFileName}` }).promise();
+  await s3.deleteObject({ Bucket: "youtube-gw-bucket", Key: `videos/${thumbnailFileName}` }).promise();
   return next();
 };
