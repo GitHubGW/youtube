@@ -65,6 +65,7 @@ export const videoMulterMiddleware = multer({
 export const handleDeleteFileFromAWS = (req: any, res: Response, next: NextFunction) => {
   const { file } = req;
   console.log("avatarUrl", file);
+  console.log("file.key", file.key);
 
   if (file === undefined) {
     return next();
@@ -75,5 +76,14 @@ export const handleDeleteFileFromAWS = (req: any, res: Response, next: NextFunct
     Key: `avatars/${file.key}`,
   });
 
+  console.log("complete");
+
   return next();
+};
+
+export const handleDeleteVideoFileFromAWS = (req: any, res: Response, next: NextFunction) => {
+  console.log("handleDeleteVideoFileFromAWS req.file", req.file);
+  console.log("handleDeleteVideoFileFromAWS req.files", req.files);
+
+  next();
 };
