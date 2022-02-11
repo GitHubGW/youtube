@@ -34,6 +34,8 @@ export const handlePostEditProfile = async (req: any, res: Response): Promise<vo
       file,
     } = req;
 
+    console.log("handlePostEditProfile", file);
+
     const updatedUser: UserInterface | null = await User.findByIdAndUpdate(
       loggedInUser?._id,
       { $set: { username, email, avatarUrl: file?.path ? file?.path : file?.location } },

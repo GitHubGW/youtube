@@ -117,7 +117,11 @@ export const handleDeleteVideo = async (req: Request, res: Response): Promise<vo
     const {
       params: { id },
       session: { loggedInUser },
+      file,
     } = req;
+
+    console.log("handleDeleteVideo", file);
+
     const foundVideo: VideoInterface | null = await Video.findById(id);
     const foundUser: UserInterface | null = await User.findById(loggedInUser?._id);
 

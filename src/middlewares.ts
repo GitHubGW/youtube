@@ -61,3 +61,19 @@ export const videoMulterMiddleware = multer({
   { name: "video", maxCount: 1 },
   { name: "thumbnail", maxCount: 1 },
 ]);
+
+export const handleDeleteFileFromAWS = (req: any, res: Response, next: NextFunction) => {
+  const { file } = req;
+  console.log("avatarUrl", file);
+
+  if (file === undefined) {
+    return next();
+  }
+
+  s3.deleteObject({
+    Bucket: "youtube-gw-bucket",
+    Key: `avatars/${file.key}`,
+  });
+
+  return next();
+};
