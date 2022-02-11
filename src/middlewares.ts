@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import AWS from "aws-sdk";
 import multer from "multer";
 import multerS3 from "multer-s3";
+import Video, { VideoInterface } from "./models/Video";
 
 const s3: AWS.S3 = new AWS.S3({
   credentials: {
@@ -62,28 +63,31 @@ export const videoMulterMiddleware = multer({
   { name: "thumbnail", maxCount: 1 },
 ]);
 
-export const handleDeleteFileFromAWS = (req: any, res: Response, next: NextFunction) => {
-  const { file } = req;
-  console.log("avatarUrl", file);
-  console.log("file.key", file.key);
+export const deleteS3AvatarMiddleware = (req: Request, res: Response, next: NextFunction): void => {
+  const {
+    file,
+    session: { loggedInUser },
+  } = req;
 
-  if (file === undefined) {
+  if (file === undefined || loggedInUser?.avatarUrl === undefined) {
     return next();
   }
 
-  s3.deleteObject({
-    Bucket: "youtube-gw-bucket",
-    Key: `avatars/${file.key}`,
-  });
-
-  console.log("complete");
-
+  const avatarFileName: string = loggedInUser?.avatarUrl.split("avatars/")[1];
+  s3.deleteObject({ Bucket: "youtube-gw-bucket", Key: `avatars/${avatarFileName}` });
   return next();
 };
 
-export const handleDeleteVideoFileFromAWS = (req: any, res: Response, next: NextFunction) => {
-  console.log("handleDeleteVideoFileFromAWS req.file", req.file);
-  console.log("handleDeleteVideoFileFromAWS req.files", req.files);
+export const deleteS3VideoMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  const foundVideo: VideoInterface | null = await Video.findById(req.params.id);
 
-  next();
+  if (foundVideo === null) {
+    return next();
+  }
+
+  const videoFileName: string = foundVideo.videoUrl.split("videos/")[1];
+  const thumbnailFileName: string = foundVideo.thumbnailUrl.split("videos/")[1];
+  s3.deleteObject({ Bucket: "youtube-gw-bucket", Key: `videos/${videoFileName}` });
+  s3.deleteObject({ Bucket: "youtube-gw-bucket", Key: `videos/${thumbnailFileName}` });
+  return next();
 };
