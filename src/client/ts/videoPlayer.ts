@@ -13,12 +13,10 @@ let setTimeoutId: NodeJS.Timeout | null = null;
 
 const handleSetDuration = (): void => {
   if (video && videoDuration && videoTimeline) {
-    if (isNaN(video.duration)) {
-      const duration: number = Math.ceil(video.duration);
-      const parsedDuration: string = new Date(duration * 1000).toTimeString().substring(3, 8);
-      videoDuration.innerText = parsedDuration;
-      videoTimeline.max = String(duration);
-    }
+    const duration: number = Math.ceil(video.duration);
+    const parsedDuration: string = new Date(duration * 1000).toTimeString().substring(3, 8);
+    videoDuration.innerText = parsedDuration;
+    videoTimeline.max = String(duration);
   }
 };
 
@@ -127,6 +125,7 @@ const handleFetch = async (): Promise<void> => {
   }
 };
 
+handleSetDuration();
 video?.addEventListener("canplay", handleSetDuration);
 video?.addEventListener("timeupdate", handleSetCurrentTime);
 video?.addEventListener("click", handlePlayVideo);
@@ -140,4 +139,3 @@ window.addEventListener("keypress", handlePressSpace);
 videoPlayer?.addEventListener("mousemove", hanldeShowVideoControl);
 videoPlayer?.addEventListener("mouseleave", hanldeHideVideoControl);
 video?.addEventListener("ended", handleFetch);
-handleSetDuration();
