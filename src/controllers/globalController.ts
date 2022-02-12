@@ -252,3 +252,7 @@ export const handleKakaoAuthEnd = async (req: Request, res: Response): Promise<v
     return res.render("globals/login", { errorMessage: "카카오 로그인에 실패하였습니다." });
   }
 };
+
+export const handleNotFound = (req: Request, res: Response): void => {
+  return res.status(404).render("404", { pageTitle: "페이지를 찾을 수 없습니다." });
+};

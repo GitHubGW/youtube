@@ -11,6 +11,7 @@ import {
   handleGitHubAuthEnd,
   handleKakaoAuthStart,
   handleKakaoAuthEnd,
+  handleNotFound,
 } from "../controllers/globalController";
 import { publicMiddleware, privateMiddleware } from "../middlewares";
 
@@ -27,5 +28,6 @@ globalRouter.get("/github/auth/start", publicMiddleware, handleGitHubAuthStart);
 globalRouter.get("/github/auth/end", publicMiddleware, handleGitHubAuthEnd);
 globalRouter.get("/kakao/auth/start", publicMiddleware, handleKakaoAuthStart);
 globalRouter.get("/kakao/auth/end", publicMiddleware, handleKakaoAuthEnd);
+globalRouter.get("/:id", handleNotFound);
 
 export default globalRouter;
