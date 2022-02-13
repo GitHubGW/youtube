@@ -15,8 +15,7 @@ export const handleIncreaseView = async (req: Request, res: Response): Promise<R
       throw new Error();
     }
 
-    foundVideo.meta.views = foundVideo.meta.views + 1;
-    await foundVideo.save();
+    await Video.findByIdAndUpdate(id, { $set: { meta: { views: foundVideo.meta.views + 1 } } });
     return res.sendStatus(200);
   } catch (error) {
     console.log("handleIncreaseView error");
