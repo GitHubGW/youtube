@@ -8,6 +8,9 @@ block content
     .video-detail__main
       +mixinVideoPlayer(video)
       .video__info
+        div.video__hashtags
+          each hashtag in video.hashtags
+            span(id="jsHashtag") #{hashtag}
         h5.video__title=video.title
         .video__viewDate
           if video.meta.views > 0
@@ -89,6 +92,7 @@ block content
         +mixinVideoDetail(video)
 
 block script
-  script(src="/assets/js/videoPlayer.js") 
+  script(src="/assets/js/videoPlayer.js")
   script(src="/assets/js/thumbnailVideo.js")
   script(src="/assets/js/comment.js") 
+  script(src="/assets/js/hashtag.js")

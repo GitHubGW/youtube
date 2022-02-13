@@ -9,6 +9,18 @@
       width: 100%;
       max-width: 100%;
       margin-top: 20px;
+      .video__hashtags{
+        margin-bottom: 7px;
+        span{
+          color: #065fd4;
+          font-size: 12px;
+          cursor: pointer;
+          margin-right: 4px;
+          &:hover{
+            text-decoration: underline;
+          }
+        }
+      }
       button {
         width: 130px;
         background-color: $dark-red;
