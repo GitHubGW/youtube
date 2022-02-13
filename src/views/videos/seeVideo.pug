@@ -61,7 +61,7 @@ block content
           if isLoggedIn===true
             input(type="text" placeholder="공개 댓글 추가..." name="comment" id="jsCommentInput" minLength=1)
           else
-            input(type="text" placeholder="공개 댓글 추가..." name="comment" id="jsCommentInput" minLength=1 disabled=true)
+            input(type="text" placeholder="로그인 후 댓글을 남길 수 있습니다." name="comment" id="jsCommentInput" minLength=1 disabled=true)
         
         ul(class="video__comments-list" id="jsCommentUl")
           each comment in video.comments.reverse()
