@@ -134,3 +134,5 @@
 - [x] 댓글 삭제
 
 ## License
+
+<a href="https://github.com/GitHubGW/youtube/blob/main/LICENSE">MIT</a>
