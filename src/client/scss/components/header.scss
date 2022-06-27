@@ -1,6 +1,6 @@
 .header {
   background-color: white;
-  .header__wrapper {
+  &__wrapper {
     padding: 17px 0px;
     width: 100%;
     margin: 0 auto;
@@ -8,157 +8,160 @@
     display: grid;
     grid-template-columns: 1fr 1.5fr 1fr;
     align-items: center;
-    .header__column {
-      &:first-child{
-        padding-left: 18px;
+  }
+
+  &__column {
+    &:first-child{
+      padding-left: 18px;
+    }
+    .youtube__title{
+      display: flex;
+      align-items: center;
+      font-family: 'Anton', sans-serif;
+      font-size: 19px;
+      letter-spacing: -2px;
+      font-weight: 600;
+      color: $black;
+      svg{
+        width:120px;
       }
-      .youtube__title{
-        display: flex;
-        align-items: center;
-        font-family: 'Anton', sans-serif;
-        font-size: 19px;
-        letter-spacing: -2px;
-        font-weight: 600;
-        color: $black;
-        svg{
-          width:120px;
-        }
-        .header__align {
-          position: relative;
-          margin-right: 35px;
-          height: 12px;
-          span{
-            position: absolute;
-            width: 18px;
-            height:2px;
-            background-color: $medium-gray;
-            &:nth-child(1){
-              top: 0;
-            }
-            &:nth-child(2){
-              top: 50%;
-            }
-            &:nth-child(3){
-              top: 100%;
-            } 
-          }
-        }
-      }
-      &:nth-child(2) {
-        width: 100%;
-        justify-self: center;
-      }
-      &:last-child {
-        justify-self: end;
-      }
-      ul {
-        display: flex;
-        align-items: center;
-        color: white;
-        font-weight: 600;
-        text-transform: uppercase;
-        li.join__btn {
-          margin-right: 20px;
-          a{
-            color: $blue;
-            font-size: 15px;
-            &:visited{
-              color: $blue;
-            }
-          }
-        }
-        li.login__btn{
+
+    }
+    &:nth-child(2) {
+      width: 100%;
+      justify-self: center;
+    }
+    &:last-child {
+      justify-self: end;
+    }
+    ul {
+      display: flex;
+      align-items: center;
+      color: white;
+      font-weight: 600;
+      text-transform: uppercase;
+      li.join__btn {
+        margin-right: 20px;
+        a{
           color: $blue;
-          border: 1px solid $blue;
-          padding: 10px 15px;
-          .fa-user-circle{
-            font-size: 16px;
+          font-size: 15px;
+          &:visited{
             color: $blue;
-            margin-right: 6px;
-          }
-          a{
-            color: $blue;
-            font-size: 15px;
-            &:visited{
-              color: $blue;
-            }
-          }
-        }
-        li.upload__btn{
-          color: $gray;
-          margin-right: 25px;
-          font-size: 15px;
-          cursor: pointer;
-          a{
-            &:visited{
-              color: $gray;
-            }
-            i{
-              font-size: 18px;
-              margin-right: 5px;
-            }
-          }
-        }
-        li.profile__btn{
-          color: $gray;
-          margin-right: 25px;
-          font-size: 15px;
-          cursor: pointer;
-          a{
-            &:visited{
-              color: $gray;
-            }
-            i{
-              font-size: 18px;
-              margin-right: 5px;
-            }
-          }
-        }
-        li.logout__btn{
-          color: $blue;
-          margin-right: 0px;
-          font-size: 15px;
-          cursor: pointer;
-          a{
-            &:visited{
-              color: $blue;
-            }
-            i{
-              font-size: 18px;
-              margin-right: 3px;
-            }
           }
         }
       }
-      form.search__form {
-        width: 100%;
-        position: relative;
-        input {
-          padding: 8px;
-          width: 100%;
+      li.login__btn{
+        color: $blue;
+        border: 1px solid $blue;
+        padding: 10px 15px;
+        .fa-user-circle{
           font-size: 16px;
-          color: $black;
-          font-weight: 400;
-          max-width: none;
-          border:1px solid $border-color;
-          box-shadow: none;
-          &::placeholder {
-            font-weight: 300;
-            color: #888888;
-          }
-          &:focus {
-            border:1px solid $blue;
-          }
+          color: $blue;
+          margin-right: 6px;
         }
-        i{
-          position: absolute;
-          top: 27%;
-          right:10px;
-          color: $gray;
+        a{
+          color: $blue;
           font-size: 15px;
-          cursor: pointer;
+          &:visited{
+            color: $blue;
+          }
         }
       }
+      li.upload__btn{
+        color: $gray;
+        margin-right: 25px;
+        font-size: 15px;
+        cursor: pointer;
+        a{
+          &:visited{
+            color: $gray;
+          }
+          i{
+            font-size: 18px;
+            margin-right: 5px;
+          }
+        }
+      }
+      li.profile__btn{
+        color: $gray;
+        margin-right: 25px;
+        font-size: 15px;
+        cursor: pointer;
+        a{
+          &:visited{
+            color: $gray;
+          }
+          i{
+            font-size: 18px;
+            margin-right: 5px;
+          }
+        }
+      }
+      li.logout__btn{
+        color: $blue;
+        margin-right: 0px;
+        font-size: 15px;
+        cursor: pointer;
+        a{
+          &:visited{
+            color: $blue;
+          }
+          i{
+            font-size: 18px;
+            margin-right: 3px;
+          }
+        }
+      }
+    }
+    form.search__form {
+      width: 100%;
+      position: relative;
+      input {
+        padding: 8px;
+        width: 100%;
+        font-size: 16px;
+        color: $black;
+        font-weight: 400;
+        max-width: none;
+        border:1px solid $border-color;
+        box-shadow: none;
+        &::placeholder {
+          font-weight: 300;
+          color: #888888;
+        }
+        &:focus {
+          border:1px solid $blue;
+        }
+      }
+      i{
+        position: absolute;
+        top: 27%;
+        right:10px;
+        color: $gray;
+        font-size: 15px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__align {
+    position: relative;
+    margin-right: 35px;
+    height: 12px;
+    span{
+      position: absolute;
+      width: 18px;
+      height:2px;
+      background-color: $medium-gray;
+      &:nth-child(1){
+        top: 0;
+      }
+      &:nth-child(2){
+        top: 50%;
+      }
+      &:nth-child(3){
+        top: 100%;
+      } 
     }
   }
 }

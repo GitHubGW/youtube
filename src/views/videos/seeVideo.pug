@@ -27,7 +27,7 @@ block content
                 button 비디오 수정
         .division-line
         .video__author
-          .video__author__avatar
+          .video__avatar
             a(href=`/users/${video.user.username}`)
               if video.user.avatarUrl
                 img(src=`${video.user.avatarUrl}` crossorigin)
@@ -40,12 +40,12 @@ block content
       .video__comments 
 
         if video.comments.length > 0
-          span.video__comment-number
+          span.video__totalComments
             |댓글
             span#jsCommentNumber #{video.comments.length}
             |개
         else if video.comments.length === 0
-          span.video__comment-number 
+          span.video__totalComments
             |댓글
             span#jsCommentNumber 0
             |개
@@ -63,7 +63,7 @@ block content
           else
             input(type="text" placeholder="로그인 후 댓글을 남길 수 있습니다." name="comment" id="jsCommentInput" minLength=1 disabled=true)
         
-        ul(class="video__comments-list" id="jsCommentUl")
+        ul(class="comment__list" id="jsCommentUl")
           each comment in video.comments.reverse()
             li(class="comment__item" id="jsCommentLi" data-id=comment._id)
               .comment__image

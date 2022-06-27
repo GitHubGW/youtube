@@ -32,10 +32,10 @@
 @import "./videos/seeVideo";
 
 
-html,
-body {
+html, body {
   height: 100%;
 }
+
 body {
   background-color: #F9F9F9;
   color: $black;
@@ -43,15 +43,15 @@ body {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
 }
+
 main {
   width: 100%;
   max-width: $max-width;
   margin: 0 auto;
   min-height: 77vh;
 }
-button,
-input,
-textarea{
+
+button, input, textarea{
   width: 100%;
   padding: 7px 10px;
   border-radius: 3px;
@@ -64,16 +64,18 @@ textarea{
   resize: none;
   box-sizing: border-box;
   box-shadow: 0 1px 3px $light-black, 0 1px 2px $border-color;
+  
   &::placeholder{
     font-weight: 300;
     color: rgba(0,0,0,0.7);
   }
 }
-button,
-input[type="submit"] {
+
+button, input[type="submit"] {
   cursor: pointer;
 }
-a{
+
+a {
   text-decoration: none;
   color:inherit;
 }

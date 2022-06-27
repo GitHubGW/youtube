@@ -2,16 +2,16 @@ mixin mixinVideo(video)
   .videoBlock
     a(href=`/videos/${video.id}`)
       video(class="videoBlock__thumbnail" id="jsThumbnailVideo" src=`${video.videoUrl}` poster=`${video.thumbnailUrl}` controls=false muted="muted" crossorigin)
-      .videoBlock__thumbnail__content 
-        .videoBlock__thumbnail__image
+      .videoBlock__content 
+        .videoBlock__image
           if video.user.avatarUrl
             img(src=`${video.user.avatarUrl}` crossorigin)
           else 
             img(src="/images/default_user.png" crossorigin)
-        .videoBlock__thumbnail__main
+        .videoBlock__main
           h4.videoBlock__title #{video.title}
           h5 #{video.user.name}
-          .videoBlock__thumbnail__viewDate
+          .videoBlock__viewDate
             if video.meta.views > 0
               h6.videoBlock__views 조회수 #{video.meta.views}
             else if video.meta.views === 0

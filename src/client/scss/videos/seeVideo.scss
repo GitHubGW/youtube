@@ -31,7 +31,7 @@
         display: flex;
         align-items: center;
         margin-top: 18px;
-        .video__author__avatar {
+        .video__avatar {
           width: 43px;
           height: 43px;
           border-radius: 50%;
@@ -85,7 +85,7 @@
       }
     }
     .video__comments {
-      .video__comment-number {
+      .video__totalComments {
         font-size: 17px;
         color: black;
         display: inline-block;
@@ -113,7 +113,7 @@
           font-weight: 400;
         }
       }
-      .video__comments-list {
+      .comment__list {
         margin-top: 55px;
         li {
           color: black;

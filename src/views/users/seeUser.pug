@@ -4,7 +4,7 @@ include ../mixins/mixinThumbnail
 
 block content
   .user-profile 
-    .user-profile-container
+    .user-profile__container
       .user-profile__header
         .profile__avatar
           if user.avatarUrl===undefined
@@ -41,7 +41,7 @@ block content
       if user.videos.length > 0
         .uploaded-videos
           h2 #{user.username}'의 비디오
-          .uploaded-videos-container
+          .uploaded-videos__container
             each video in user.videos
               +mixinThumbnail(video)
 

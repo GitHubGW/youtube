@@ -5,7 +5,8 @@
       line-height: 20px;
     }
   }
-  .form-container__link{
+  
+  &__link{
     display: inline-block;
     width: 100%;
     max-width: $width;

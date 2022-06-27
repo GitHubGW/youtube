@@ -1,9 +1,10 @@
-.search__container {
+.search-container {
   display: flex;
-  .search_main {
+  
+  .search-main {
     flex: 8.3;
     padding: 20px 50px;
-    .search_main__result {
+    .search-main__result {
       border-bottom: 1px solid #ddd;
       padding-top: 10px;
       padding-bottom: 18px;
@@ -14,7 +15,7 @@
         font-size: 17px;
       }
     }
-    .search_main__content {
+    .search-main__content {
       padding-top: 20px;
       h5 {
         font-weight: 400;

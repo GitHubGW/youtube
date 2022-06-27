@@ -5,7 +5,8 @@
   flex-direction: column;
   align-items: center;
   padding: 25px 0;
-  .footer__icon {
+
+  &__icon {
     color: $light-black;
     font-size: 37px;
     margin-bottom: 3px;
@@ -15,7 +16,8 @@
       color: $dark-red;
     }
   }
-  .footer__text {
+  
+  &__text {
     font-size: 14px;
     color: $light-black;
     font-weight: 700;

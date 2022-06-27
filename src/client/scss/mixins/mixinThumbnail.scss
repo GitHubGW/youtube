@@ -2,9 +2,7 @@
   border-top: 1px solid #ddd;
   padding: 15px 0;
   transition: all 0.2s ease;
-  &:hover {
-    transform: scale(0.97);
-  }
+
   a {
     display: flex;
     width: 100%;
@@ -15,32 +13,42 @@
       overflow: hidden;
       border-radius: 5px;
     }
-    .thumbnail__container {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      margin-left: 14px;
-      padding: 11px 0;
-      .thumbnailBlock__main {
-        width: 80%;
-        .thumbnailBlock__title {
-          color: $black;
-          font-size: 15px;
-          margin-bottom: 10px;
-        }
-        .thumbnailBlock__description {
-          color: #606060;
-          font-size: 13px;
-          line-height: 1.5;
-        }
-      }
-      .thumbnailBlock__views {
-        color: $red;
-        font-size: 13px;
-      }
-    }
   }
+  
+  &:hover {
+    transform: scale(0.97);
+  }
+  
   &:last-child {
     border-bottom: 1px solid #ddd;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-left: 14px;
+    padding: 11px 0;
+  }
+
+  &__main {
+    width: 80%;
+  }
+
+  &__title {
+    color: $black;
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  &__description {
+    color: #606060;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  &__views {
+    color: $red;
+    font-size: 13px;
   }
 }
