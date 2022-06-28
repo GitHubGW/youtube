@@ -85,9 +85,9 @@ const handleSetVolume = (): void => {
   }
 };
 
-const handleSetTimeline = (event: any): void => {
+const handleSetTimeline = (event: Event): void => {
   if (video) {
-    video.currentTime = +event.target.value;
+    video.currentTime = +(event.target as HTMLInputElement).value;
   }
 };
 

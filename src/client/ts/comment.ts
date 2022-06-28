@@ -50,7 +50,7 @@ const handleCreateCommentForm = (loggedInUser: any, commentId: string, commentIn
   commentUl?.prepend(li);
 };
 
-const handleCreateComment = async (event: any): Promise<void> => {
+const handleCreateComment = async (event: Event): Promise<void> => {
   event.preventDefault();
 
   try {
